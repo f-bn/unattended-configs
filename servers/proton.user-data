@@ -1,0 +1,591 @@
+#cloud-config
+autoinstall:
+  version: 1
+  # - Installer -
+  refresh-installer:
+    update: true
+  # - Source -
+  source:
+    id: ubuntu-server-minimal
+    search_drivers: false
+  # - Kernel -
+  kernel:
+    flavor: hwe
+  # - Keyboard -
+  keyboard:
+    layout: fr
+    variant: ''
+  # - Locale -
+  locale: en_US.UTF-8
+  # - Timezone -
+  timezone: Etc/UTC
+  # - APT configurations -
+  apt:
+    geoip: true
+    preserve_sources_list: false
+    mirror-selection:
+      primary:
+        - country-mirror
+        - uri: http://archive.ubuntu.com/ubuntu
+  # - Packages -
+  packages:
+    - apt-utils
+    - bash-completion
+    - bind9-dnsutils
+    - chrony
+    - htop
+    - ifstat
+    - iotop-c
+    - iputils-ping
+    - less
+    - lm-sensors
+    - lvm2
+    - mkisofs
+    - netcat-openbsd
+    - nvme-cli
+    - psmisc
+    - rsync
+    - smartmontools
+    - socat
+    - strace
+    - sysstat
+    - tmux
+    - tree
+    - unzip
+    - unattended-upgrades
+    - vim
+    - wget
+  # - Updates -
+  updates: all
+  # - Network -
+  network:
+    version: 2
+    ethernets:
+      enp3s0:
+        match:
+          macaddress: a8:a1:59:e8:1c:c5
+        addresses:
+          - 192.168.144.3/24 # Default IP address for management
+          - 192.168.144.4/32 # External addresses
+          - 192.168.144.5/32 #
+          - 192.168.144.6/32 #
+        nameservers:
+          addresses: ['192.168.144.2']
+          search: ['homelab.lan']
+        routes:
+          - { to: default, via: 192.168.144.1 }
+        wakeonlan: true
+  # - Storage -
+  storage:
+    swap:
+      size: 0 # Disable creation of swapfile
+    config:
+      ## Root disk
+      - id: sda-disk
+        type: disk
+        ptable: gpt
+        path: /dev/sda
+        preserve: false
+      ## Root disk partitions
+      # efi partition
+      - id: sda-efi-part
+        type: partition
+        device: sda-disk
+        number: 1
+        size: 512MB
+        grub_device: true
+        flag: boot
+      - id: sda-efi-fs
+        type: format
+        volume: sda-efi-part
+        fstype: fat32
+      - id: sda-efi-mount
+        type: mount
+        device: sda-efi-fs
+        path: /boot/efi
+      # boot partition
+      - id: sda-boot-part
+        type: partition
+        device: sda-disk
+        number: 2
+        size: 1GB
+      - id: sda-boot-fs
+        type: format
+        volume: sda-boot-part
+        fstype: ext4
+      - id: sda-boot-mount
+        type: mount
+        device: sda-boot-fs
+        path: /boot
+      # system LVM partition
+      - id: sda-lvm-part
+        type: partition
+        device: sda-disk
+        number: 3
+        size: -1
+      ## system LVM volume groups
+      - id: lvm-system-vg
+        type: lvm_volgroup
+        name: system
+        devices: ['sda-lvm-part']
+      ## System LVM volumes
+      # root volume (path: /, fs: ext4, size: 10G)
+      - id: lvm-system-root-vol
+        type: lvm_partition
+        volgroup: lvm-system-vg
+        name: root
+        size: 10GB
+      - id: lvm-system-root-fs
+        type: format
+        volume: lvm-system-root-vol
+        fstype: ext4
+      - id: lvm-system-root-mount
+        type: mount
+        device: lvm-system-root-fs
+        path: /
+      # home volume (path: /home, fs: ext4, size: 5G)
+      - id: lvm-system-home-vol
+        type: lvm_partition
+        volgroup: lvm-system-vg
+        name: home
+        size: 5GB
+      - id: lvm-system-home-fs
+        type: format
+        volume: lvm-system-home-vol
+        fstype: ext4
+      - id: lvm-system-home-mount
+        type: mount
+        device: lvm-system-home-fs
+        path: /home
+        options: 'nosuid,nodev,noexec'
+      # logs volume (path: /var/log, fs: ext4, size: 10G)
+      - id: lvm-system-logs-vol
+        type: lvm_partition
+        volgroup: lvm-system-vg
+        name: logs
+        size: 10GB
+      - id: lvm-system-logs-fs
+        type: format
+        volume: lvm-system-logs-vol
+        fstype: ext4
+      - id: lvm-system-logs-mount
+        type: mount
+        device: lvm-system-logs-fs
+        path: /var/log
+        options: 'nosuid,nodev,noexec'
+      # incus volume (path: /var/lib/incus, fs: ext4, size: 50G)
+      - id: lvm-system-incus-vol
+        type: lvm_partition
+        volgroup: lvm-system-vg
+        name: incus
+        size: 50GB
+      - id: lvm-system-incus-fs
+        type: format
+        volume: lvm-system-incus-vol
+        fstype: ext4
+      - id: lvm-system-incus-mount
+        type: mount
+        device: lvm-system-incus-fs
+        path: /var/lib/incus
+      # swap volume (path: null, fs: swap, size: 32GB)
+      - id: lvm-system-swap-vol
+        type: lvm_partition
+        volgroup: lvm-system-vg
+        name: swap
+        size: 32GB
+      - id: lvm-system-swap-fs
+        type: format
+        volume: lvm-system-swap-vol
+        fstype: swap
+      - id: lvm-system-swap-mount
+        type: mount
+        device: lvm-system-swap-fs
+        path: ''
+  # - SSH -
+  ssh:
+    install-server: true
+    allow-pw: false
+  # - Late commands -
+  late-commands:
+    # Remove unwanted packages and cleanup dependencies
+    - curtin in-target --target=/target -- apt remove --purge -y multipath-tools ntfs-3g packagekit snapd
+    - curtin in-target --target=/target -- apt autoremove --purge -y
+    # Manage services
+    - curtin in-target --target=/target -- systemctl disable sysstat.service
+    # Mount /tmp as a tmpfs
+    - curtin in-target --target=/target -- systemctl enable /usr/share/systemd/tmp.mount
+    # Display GRUB menu on boot and set timeout of 5 seconds
+    - curtin in-target --target=/target -- sed -ie 's|^GRUB_TIMEOUT_STYLE=.*|#&|' /etc/default/grub
+    - curtin in-target --target=/target -- sed -ie 's|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=5|' /etc/default/grub
+    - curtin in-target --target=/target -- update-grub
+  # - Post-Installation (cloud-init) -
+  user-data:
+    # Hostname
+    hostname: proton
+    fqdn: proton.homelab.lan
+    prefer_fqdn_over_hostname: true
+    # Users and groups
+    groups:
+      - sysadmins
+    users:
+      - name: root
+        hashed_passwd: "<redacted>"
+        lock_passwd: false
+      - name: core
+        hashed_passwd: "<redacted>"
+        lock_passwd: false
+        groups: ['sysadmins', 'systemd-journal']
+        shell: /usr/bin/bash
+        gecos: "Default administrator user"
+        ssh_authorized_keys: ["<redacted>"]
+    # Packages
+    package_update: true
+    packages:
+      - incus
+      - incus-client
+    # SSH
+    ssh_genkeytypes: ['ed25519']
+    ssh_quiet_keygen: true
+    ssh:
+      emit_keys_to_console: false
+    # System configurations
+    write_files:
+      - path: /etc/sysctl.d/80-custom.conf
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          vm.swappiness=5
+          net.core.rmem_max=16777216
+          net.core.wmem_max=16777216
+          net.ipv4.tcp_rmem=4096 87380 16777216
+          net.ipv4.tcp_wmem=4096 87380 16777216
+          net.ipv4.tcp_fastopen=3
+      - path: /etc/security/limits.d/80-incus.conf
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          *     soft  nofile   1048576
+          *     hard  nofile   1048576
+          root  soft  nofile   1048576
+          root  hard  nofile   1048576
+          *     soft  memlock  unlimited
+          *     hard  memlock  unlimited
+          root  soft  memlock  unlimited
+          root  hard  memlock  unlimited
+      - path: /etc/lvm/lvm.conf
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          # See lvm.conf(5) for details.
+          devices {
+            issue_discards = 1
+          }
+          backup {
+            backup = 1
+            retain_min = 3
+            retain_days = 5
+          }
+      - path: /etc/systemd/journald.conf
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          # See journald.conf(5) for details.
+          [Journal]
+          Storage=persistent
+          Compress=yes
+          SystemMaxFileSize=256M
+          RuntimeMaxUse=100M
+          MaxRetentionSec=3day
+      - path: /etc/chrony/chrony.conf
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          pool 0.fr.pool.ntp.org iburst
+          pool 1.fr.pool.ntp.org iburst
+          pool 2.fr.pool.ntp.org iburst
+          pool 3.fr.pool.ntp.org iburst
+          makestep 1.0 3
+          rtcsync
+      - path: /etc/sudoers.d/00-defaults
+        owner: 'root:root'
+        permissions: '0440'
+        content: |
+          # Generated by cloud-init
+          #
+          Defaults insults
+          Defaults lecture=never
+          Defaults passwd_timeout=1
+      - path: /etc/sudoers.d/10-rules
+        owner: 'root:root'
+        permissions: '0440'
+        content: |
+          # Generated by cloud-init
+          #
+          # Allow users in 'admins' group to execute any command
+          %sysadmins ALL=(ALL:ALL) ALL
+      # Workaround to configure Incus repository as deb822 sources format since 
+      # cloud-init doesn't still supports this format for 3rd-party repository
+      - path: /etc/apt/sources.list.d/incus-stable.sources
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          Enabled: yes
+          Types: deb
+          URIs: https://pkgs.zabbly.com/incus/stable
+          Suites: noble
+          Components: main
+          Architectures: amd64
+          Signed-By: /etc/apt/keyrings/zabbly.asc
+      - path: /etc/apt/keyrings/zabbly.asc
+        owner: 'root:root'
+        permissions: '0644'
+        source:
+          uri: https://pkgs.zabbly.com/key.asc
+      - path: /etc/apt/apt.conf.d/20auto-upgrades
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          // Generated by cloud-init
+          //
+          APT::Periodic::Unattended-Upgrade "1";
+          APT::Periodic::Update-Package-Lists "1";
+          APT::Periodic::Download-Upgradeable-Packages "1";
+          APT::Periodic::AutocleanInterval "7";
+      - path: /etc/apt/apt.conf.d/50unattended-upgrades
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          // Generated by cloud-init
+          //
+          Unattended-Upgrade::Allowed-Origins {
+            "${distro_id}:${distro_codename}";
+            "${distro_id}:${distro_codename}-updates";
+            "${distro_id}:${distro_codename}-security";
+            "${distro_id}:${distro_codename}-proposed";
+            "${distro_id}:${distro_codename}-backports";
+          };
+          Unattended-Upgrade::Package-Blacklist {
+            "incus";
+            "incus-client";
+          };
+          Unattended-Upgrade::MinimalSteps "false";
+          Unattended-Upgrade::InstallOnShutdown "false";
+          Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+          Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
+          Unattended-Upgrade::Remove-Unused-Dependencies "true";
+          Unattended-Upgrade::Automatic-Reboot "true";
+          Unattended-Upgrade::Automatic-Reboot-WithUsers "true";
+          Unattended-Upgrade::Automatic-Reboot-Time "08:00";
+          Unattended-Upgrade::SyslogEnable "true";
+      - path: /etc/ssh/sshd_config
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          Port 22
+          ListenAddress 192.168.144.3
+          HostKey /etc/ssh/ssh_host_ed25519_key
+          LogLevel INFO
+          LoginGraceTime 30s
+          AllowGroups sysadmins
+          PermitRootLogin no
+          PubkeyAuthentication yes
+          PasswordAuthentication no
+          PermitEmptyPasswords no
+          UsePAM yes
+          PrintMotd no
+          AllowAgentForwarding yes
+          AllowTcpForwarding yes
+          X11Forwarding no
+          IgnoreRhosts yes
+          MaxAuthTries 5
+          UseDNS no
+          AcceptEnv LANG LC_*
+          Subsystem sftp /usr/lib/openssh/sftp-server
+      - path: /etc/systemd/system/incus.service.d/10-exec-start.conf
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          # Allow sysadmins group to control Incus daemon
+          [Service]
+          ExecStart=
+          ExecStart=/opt/incus/lib/systemd/incusd --group sysadmins --verbose
+      - path: /etc/systemd/system/incus.socket.d/10-socket-group.conf
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          # Change Incus socket permissions to 'sysadmins' group
+          [Socket]
+          SocketGroup=
+          SocketGroup=sysadmins
+      - path: /etc/systemd/system/incus-lxcfs.service.d/10-exec-start.conf
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          # Enable loadavg virtualization and pidfd for process tracking
+          [Service]
+          ExecStart=
+          ExecStart=/opt/incus/bin/lxcfs --enable-loadavg --enable-pidfd /var/lib/incus-lxcfs
+      - path: /etc/systemd/system/incus-init.service
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          [Unit]
+          Description=Initialize Incus from preseed configuration
+          Documentation=https://linuxcontainers.org/incus/docs/main/
+          After=network-online.target incus.socket incus.service incus-startup.service
+          Requires=network-online.target incus.socket incus.service incus-startup.service
+          ConditionFileNotEmpty=/etc/incus/preseed.yaml
+          ConditionPathExists=!/etc/incus/.incus-initialized
+          [Service]
+          Type=oneshot
+          StandardInput=file:/etc/incus/preseed.yaml
+          ExecStart=/usr/bin/incus admin init --preseed --verbose
+          ExecStartPost=/usr/bin/touch /etc/incus/.incus-initialized
+          RemainAfterExit=yes
+          [Install]
+          WantedBy=multi-user.target
+      - path: /etc/tmux.conf
+        owner: 'root:root'
+        permissions: '0644'
+        content: |
+          # Generated by cloud-init
+          #
+          set-option -g status-style bg=green,fg=colour235
+          set-option -g status-left-length 20
+          set-option -g status-left "[Session: #S]"
+          set-window-option -g window-status-current-style fg=colour253,bg=colour236
+          set-window-option -g window-status-current-format " #I: #W "
+          set-window-option -g window-status-format " #I: #W "
+          set-window-option -g window-status-style fg=colour235
+          set -g mouse on
+          set -g renumber-windows on
+          set-option -g history-limit 100000
+          set -g default-terminal "screen-256color"
+          bind-key -r -T prefix M-k  resize-pane -U 5
+          bind-key -r -T prefix M-j  resize-pane -D 5
+          bind-key -r -T prefix M-h  resize-pane -L 5
+          bind-key -r -T prefix M-l  resize-pane -R 5
+      - path: /etc/incus/preseed.yaml
+        owner: 'root:root'
+        permissions: '0600'
+        content: |
+          # Generated by cloud-init
+          #
+          config:
+            core.https_address: 192.168.144.3:8443
+            core.metrics_address: 127.0.0.1:9099
+            core.metrics_authentication: true
+          storage_pools:
+            - name: lvm0
+              driver: lvm
+              description: "Local NVMe LVM storage pool (nvme0n1)"
+              config:
+                source: /dev/nvme0n1
+                lvm.use_thinpool: true
+                lvm.vg_name: incus+nvme0n1
+                lvm.thinpool_name: lvm0
+                lvm.thinpool_metadata_size: 1GiB
+                volume.block.filesystem: ext4
+                volume.block.mount_options: 'defaults,noatime'
+            - name: lvm1
+              driver: lvm
+              description: "Local NVMe LVM storage pool (nvme1n1)"
+              config:
+                source: /dev/nvme1n1
+                lvm.use_thinpool: true
+                lvm.vg_name: incus+nvme1n1
+                lvm.thinpool_name: lvm1
+                lvm.thinpool_metadata_size: 1GiB
+                volume.block.filesystem: ext4
+                volume.block.mount_options: 'defaults,noatime'
+          networks:
+            - name: virbr0
+              type: bridge
+              description: "Default private network for instances"
+              config:
+                ipv4.address: 10.0.1.1/24
+                ipv4.dhcp: true
+                ipv4.dhcp.ranges: 10.0.1.5-10.0.1.254
+                ipv4.dhcp.expiry: infinite
+                ipv4.nat: true
+                ipv4.nat.address: 192.168.144.4
+                ipv4.firewall: false
+                ipv6.address: none
+                ipv6.firewall: false  
+                dns.domain: default.incus.internal
+                dns.mode: managed
+          projects:
+            - name: default
+              description: "Default namespace (workloads disabled)"
+              config:
+                limits.instances: 0
+                limits.cpu: 0
+                limits.memory: 0
+                limits.processes: 0
+            - name: sandbox
+              description: "Testing environment namespace"
+              config:
+                features.images: false
+                features.profiles: false
+                features.networks: false
+                features.storage.volumes: true
+                features.storage.buckets: true
+          profiles:
+            - name: default
+              description: "Generic profile for instances"
+              devices:
+                eth0:
+                  type: nic
+                  network: virbr0
+                  name: eth0
+                root:
+                  type: disk
+                  pool: lvm0
+                  path: /
+            - name: virt
+              description: "Generic profile for virtual machines"
+              config:
+                security.secureboot: false
+              devices:
+                eth0:
+                  type: nic
+                  network: virbr0
+                  name: eth0
+                root:
+                  type: disk
+                  pool: lvm0
+                  path: /
+                userdata:
+                  type: disk
+                  source: cloud-init:config
+    # Late commands
+    runcmd:
+      - systemctl daemon-reload
+      - systemctl enable --now incus-init.service
+    # Reboot machine at end of Cloud-Init run
+    power_state:
+      mode: reboot
+      message: 'End of cloud-init run, reboot now'
+      condition: true

@@ -6,10 +6,10 @@ This repository contains unattended configurations for my personal devices runni
 
 | Device         | Type      | Operating system | Chassis                     | Configuration |
 | :--------------| :---------| :----------------| :---------------------------| :-------------|
-| **buran**      | Desktop   | Windows 11 24H2  | Custom                      | [unattended.xml](./desktops/buran/buran_unattended.xml) |
-| **buran**      | WSL       | Ubuntu 24.04 LTS | Virtual machine (WSL2)      | [default.user-data](./wsl2/buran/default.user-data)     |
-| **foton**      | Laptop    | Ubuntu 25.04     | Thinkpad P14s Gen 5 (Intel) | [foton.user-data](./laptops/foton/foton.user-data)      |
-| **proton**     | Server    | Ubuntu 24.04 LTS | ASRock X300                 | [proton.user-data](./servers/proton/proton.user-data)   |
+| **buran**      | Desktop   | Windows 11 24H2  | Custom                      | [unattended.xml](./desktops/buran_unattended.xml) |
+| **buran**      | WSL       | Ubuntu 24.04 LTS | Virtual machine (WSL2)      | [default.user-data](./wsl2/default.user-data)     |
+| **foton**      | Laptop    | Ubuntu 25.04     | Thinkpad P14s Gen 5 (Intel) | [foton.user-data](./laptops/foton.user-data)      |
+| **proton**     | Server    | Ubuntu 24.04 LTS | ASRock X300                 | [proton.user-data](./servers/proton.user-data)   |
 
 ### How-to
 
@@ -17,12 +17,72 @@ This repository contains unattended configurations for my personal devices runni
 
 For the desktop, laptop and server installations, Ventoy `autoinstall` feature is used to pass `user-data` (Ubuntu) or `unattended.xml` (Windows) configuration files to the respective installer.
 
-We need to create a dedicated autoinstall folder on the Ventoy partition:
+In order to setup Ventoy `autoinstall`, we need to create a hierarchy in the **Ventoy** partition (where ISOs are stored on the USB key) by placing the unattended configurations in expected folders. Here the current hierarchy used for this repository:
 
+```shell
+/autoinstall/
+├── desktops/
+│   └── buran_unattended.xml
+├── laptops/
+│   └── foton.user-data
+├── servers/
+│   └── proton.user-data
+/ventoy/
+└── ventoy.json
+ubuntu-24.04.2-live-server-amd64.iso
+ubuntu-25.04-desktop-amd64.iso
+win11_24h2.iso
 ```
-/autoinstall
-  \-
+
+The `ventoy.json` file defines which unattended file(s) is to be used with a given ISO file. You can have multiple configurations for an ISO file if needed.
+
+In the following configuration, I define that:
+  - **Ubuntu Server** ISOs are linked to my *proton* server unattended configuration
+  - **Ubuntu Desktop** ISOs are linked to my *foton* laptop unattended configuration
+  - **Windows 11** ISOs are linked to my *buran* desktop unattended configuration
+
+```json
+{
+    "auto_install":[
+        {
+            "image": "/ubuntu-**.**.*-live-server-amd64.iso",
+            "template": [
+                "/autoinstall/servers/proton.user-data"
+            ]
+        },
+        {
+            "image": "/ubuntu-**.**-live-server-amd64.iso",
+            "template": [
+                "/autoinstall/servers/proton.user-data"
+            ]
+        },
+        {
+            "image": "/ubuntu-**.**-desktop-amd64.iso",
+            "template": [
+                "/autoinstall/laptops/foton.user-data"
+            ]
+        },
+        {
+            "image": "/ubuntu-**.**.*-desktop-amd64.iso",
+            "template": [
+                "/autoinstall/laptops/foton.user-data"
+            ]
+        },
+        {
+            "image": "/win11_****.iso",
+            "template": [
+                "/autoinstall/desktops/buran_unattended.xml"
+            ]
+        }
+    ]
+}
 ```
+
+Once done, simply boot the USB key on a device and when selecting the ISO in the Ventoy menu, you will have 2 options:
+* Boot without an installation template
+* Boot with `/autoinstall/**/**` template depending on the selected ISO
+
+If the boot option with installation template is choosen, the installation will be launched in a full automatted manner !
 
 **WSL2**
 

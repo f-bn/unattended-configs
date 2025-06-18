@@ -1,0 +1,34 @@
+{
+    "auto_install":[
+        {
+            "image": "/ubuntu-**.**.*-live-server-amd64.iso",
+            "template": [
+                "/autoinstall/servers/proton.user-data"
+            ]
+        },
+        {
+            "image": "/ubuntu-**.**-live-server-amd64.iso",
+            "template": [
+                "/autoinstall/servers/proton.user-data"
+            ]
+        },
+        {
+            "image": "/ubuntu-**.**-desktop-amd64.iso",
+            "template": [
+                "/autoinstall/laptops/foton.user-data"
+            ]
+        },
+        {
+            "image": "/ubuntu-**.**.*-desktop-amd64.iso",
+            "template": [
+                "/autoinstall/laptops/foton.user-data"
+            ]
+        },
+        {
+            "image": "/win11_****.iso",
+            "template": [
+                "/autoinstall/desktops/buran_unattended.xml"
+            ]
+        }
+    ]
+}

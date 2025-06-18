@@ -82,7 +82,7 @@ Once done, simply boot the USB key on a device and when selecting the ISO in the
 * Boot without an installation template
 * Boot with `/autoinstall/**/**` template depending on the selected ISO
 
-If the boot option with installation template is chosen, the installation will be launched in a full automatted manner !
+If the boot option with installation template is chosen, the installation will be launched in a fully automatted manner !
 
 **WSL2**
 
@@ -113,5 +113,10 @@ PS C:\WSL> wsl -d Linux
 
 And voilà !
 
-
 ### References
+
+- Cloud-Init: https://cloud-init.io/
+- Ubuntu autoinstall reference: https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html
+- Ventoy: https://www.ventoy.net/en/index.html
+- Ventoy Autoinstall plugin: https://www.ventoy.net/en/plugin_autoinstall.html
+- Unattend Generator (Windows): https://schneegans.de/windows/unattend-generator/

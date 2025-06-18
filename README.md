@@ -15,7 +15,7 @@ This repository contains unattended configurations for my personal devices runni
 
 **Desktops/Laptop/Servers**
 
-For the desktop, laptop and server installations, Ventoy `autoinstall` feature is used to pass `user-data` (Ubuntu) or `unattended.xml` (Windows) configuration files to the respective installer.
+For the desktops, laptops and servers installations, Ventoy `autoinstall` feature is used to pass `user-data` (Ubuntu) or `autounattend.xml` (Windows) configuration files to the respective installer.
 
 In order to setup Ventoy `autoinstall`, we need to create a hierarchy in the **Ventoy** partition (where ISOs are stored on the USB key) by placing the unattended configurations in expected folders. Here the current hierarchy used for this repository:
 

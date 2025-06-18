@@ -2,6 +2,8 @@
 
 This repository contains unattended configurations for my personal devices running on Linux and Windows.
 
+In addition to these configurations, I use `chezmoi` for managing dotfiles: https://github.com/f-bn/dotfiles
+
 **Devices**
 
 | Device         | Type      | Operating system | Chassis                     | Configuration |

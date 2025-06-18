@@ -13,7 +13,7 @@ This repository contains unattended configurations for my personal devices runni
 
 ### How-to
 
-**Desktops/Laptop**
+**Desktops/Laptop/Servers**
 
 For the desktop, laptop and server installations, Ventoy `autoinstall` feature is used to pass `user-data` (Ubuntu) or `unattended.xml` (Windows) configuration files to the respective installer.
 

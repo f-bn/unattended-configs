@@ -82,7 +82,7 @@ Once done, simply boot the USB key on a device and when selecting the ISO in the
 * Boot without an installation template
 * Boot with `/autoinstall/**/**` template depending on the selected ISO
 
-If the boot option with installation template is choosen, the installation will be launched in a full automatted manner !
+If the boot option with installation template is chosen, the installation will be launched in a full automatted manner !
 
 **WSL2**
 

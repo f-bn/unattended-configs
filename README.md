@@ -78,7 +78,7 @@ In the following configuration, I define that:
 }
 ```
 
-Once done, simply boot the USB key on a device and when selecting the ISO in the Ventoy menu, you will have 2 options:
+Once done, simply boot the USB key on a device, then select the ISO in the Ventoy menu, you will have 2 options:
 * Boot without an installation template
 * Boot with `/autoinstall/**/**` template depending on the selected ISO
 

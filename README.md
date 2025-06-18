@@ -88,7 +88,7 @@ If the boot option with installation template is chosen, the installation will b
 
 For WSL2, the new Cloud-Init [WSL datasource](https://docs.cloud-init.io/en/latest/reference/datasources/wsl.html) is used. This allows to bring your own custom distribution image and provision it in a standard and automated way. Regarding requirements, the image must at least include `systemd` and `cloud-init` packages.
 
-The file located in [folder](./wsl2/default.user-data) must be placed at `%USERPROFILE%\.cloud-init\default.user-data`. As an example, we will import [an official Ubuntu 24.04 WSL image](https://cloud-images.ubuntu.com/wsl/releases/noble/current/) provided by Canonical: 
+The `default.user-data` file located in [wsl2](./wsl2/default.user-data) folder must be placed at `%USERPROFILE%\.cloud-init\default.user-data`. As an example, we will import [an official Ubuntu 24.04 WSL image](https://cloud-images.ubuntu.com/wsl/releases/noble/current/) provided by Canonical: 
 
 ```shell
 PS C:\WSL> wsl --import Linux <install folder> ubuntu.tar.gz

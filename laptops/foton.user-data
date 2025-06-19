@@ -233,7 +233,6 @@ autoinstall:
             "userland-proxy": false,
             "features": {
               "buildkit": true
-
             },
             "cgroup-parent": "docker.slice"
           }

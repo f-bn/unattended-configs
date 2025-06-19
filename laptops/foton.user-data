@@ -40,6 +40,7 @@ autoinstall:
     - docker.io
     - docker-buildx
     - docker-compose-v2
+    - flameshot
     - fonts-cascadia-code
     - fzf
     - git
@@ -75,20 +76,33 @@ autoinstall:
     - yq
     - yt-dlp
     - zsh
-    - zsh-autosuggestions
     - zstd
   # - Updates -
   updates: all
   # - Snap packages -
   snaps:
-    - { name: chezmoi,   channel: stable, classic: true }
-    - { name: code,      channel: stable, classic: true }
-    - { name: discord,   channel: stable }
-    - { name: kubectl,   channel: stable, classic: true }
-    - { name: postman,   channel: stable }
-    - { name: terraform, channel: stable, classic: true }
-    - { name: vlc,       channel: stable }
-    - { name: 1password, channel: stable }
+    - name: chezmoi
+      channel: stable
+      classic: true
+    - name: code
+      channel: stable
+      classic: true
+    - name: discord
+      channel: stable
+    - name: kubectl
+      channel: stable
+      classic: true
+    - name: postman
+      channel: stable
+    - name: terraform
+      channel: stable
+      classic: true
+    - name: vlc
+      channel: stable
+    - name: 1password
+      channel: stable
+    - name: thunderbird
+      channel: stable
   # - Storage -
   storage:
     swap:
@@ -158,12 +172,15 @@ autoinstall:
     - curtin in-target --target=/target -- systemctl enable docker.socket
     # Mount /tmp as a tmpfs
     - curtin in-target --target=/target -- systemctl enable /usr/lib/systemd/system/tmp.mount
+    # Disable Bluetooth auto enable
+    - curtin in-target --target=/target -- sed -ie 's|^AutoEnable=.*|AutoEnable=false|' /etc/bluetooth/main.conf
     # Enable fingerprint authentication
     - curtin in-target --target=/target -- pam-auth-update --enable fprintd
   # - Post-Installation (cloud-init) -
   user-data:
     # Hostname
     hostname: foton
+    manage_etc_hosts: true
     # Users and groups
     groups:
       - docker

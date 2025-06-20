@@ -48,7 +48,6 @@ packages:
   - yq
   - yt-dlp
   - zsh
-  - zsh-autosuggestions
   - zstd
 snap:
   commands:

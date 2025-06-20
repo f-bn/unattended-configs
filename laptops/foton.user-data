@@ -92,7 +92,7 @@ autoinstall:
     - name: kubectl
       channel: stable
       classic: true
-    - name: postman
+    - name: bruno
       channel: stable
     - name: terraform
       channel: stable

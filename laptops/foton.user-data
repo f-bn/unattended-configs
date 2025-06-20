@@ -190,7 +190,7 @@ autoinstall:
         hashed_passwd: "<redacted>"
         lock_passwd: false
         groups: ['adm','docker','plugdev','sudo','systemd-journal']
-        shell: /usr/bin/bash
+        shell: /usr/bin/zsh
     # System configurations
     write_files:
       - path: /etc/sysctl.d/90-custom.conf

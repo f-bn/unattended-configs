@@ -6,12 +6,12 @@ In addition to these configurations, I use `chezmoi` for managing dotfiles: http
 
 **Devices**
 
-| Device         | Type      | Operating system | Chassis                     | Configuration |
-| :--------------| :---------| :----------------| :---------------------------| :-------------|
-| **buran**      | Desktop   | Windows 11 24H2  | Custom                      | [unattended.xml](./desktops/buran_unattended.xml) |
-| **buran**      | WSL       | Ubuntu 24.04 LTS | Virtual machine (WSL2)      | [default.user-data](./wsl2/default.user-data)     |
-| **foton**      | Laptop    | Ubuntu 25.04     | Thinkpad P14s Gen 5 (Intel) | [foton.user-data](./laptops/foton.user-data)      |
-| **proton**     | Server    | Ubuntu 24.04 LTS | ASRock DeskMini X300        | [proton.user-data](./servers/proton.user-data)   |
+| Device         | Type      | Operating system | Chassis                     | Configuration | Status    |
+| :--------------| :---------| :----------------| :---------------------------| :-------------| :---------|
+| **buran**      | Desktop   | Windows 11 24H2  | Custom                      | [unattended.xml](./desktops/buran_unattended.xml) | ❌ |
+| **buran**      | WSL       | Ubuntu 24.04 LTS | Virtual machine (WSL2)      | [default.user-data](./wsl2/default.user-data)     | ✅ |
+| **foton**      | Laptop    | Ubuntu 25.04     | Thinkpad P14s Gen 5 (Intel) | [foton.user-data](./laptops/foton.user-data)      | ✅ |
+| **proton**     | Server    | Ubuntu 24.04 LTS | ASRock DeskMini X300        | [proton.user-data](./servers/proton.user-data)    | ✅ |
 
 ### How-to
 

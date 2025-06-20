@@ -8,7 +8,7 @@ users:
     gecos: "Florian Bobin"
     hashed_passwd: "<redacted>"
     groups: ['adm','docker','sudo']
-    shell: /usr/bin/bash
+    shell: /usr/bin/zsh
 # - Packages -
 package_update: true
 package_upgrade: true

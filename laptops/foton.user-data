@@ -102,7 +102,9 @@ autoinstall:
     - name: terraform
       channel: stable
       classic: true
-    - name: 1password
+    - name: bitwarden
+      channel: stable
+    - name: bw
       channel: stable
     - name: thunderbird
       channel: stable
@@ -246,6 +248,8 @@ autoinstall:
       commands:
         # Refresh core snaps
         - [refresh]
+        # Allow Bitwarden to use secure storage
+        - [connect, bitwarden:password-manager-service]
         # Enable Discord snap to observe system (to avoid errors messages)
         - [connect, discord:system-observe]
     # Reboot machine at end of Cloud-Init run

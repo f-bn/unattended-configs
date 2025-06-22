@@ -35,6 +35,7 @@ autoinstall:
         - uri: http://archive.ubuntu.com/ubuntu
   # - Packages -
   packages:
+    - amberol
     - bind9-dnsutils
     - bind9-utils
     - chrony
@@ -70,6 +71,7 @@ autoinstall:
     - powertop
     - python3-pip
     - showtime
+    - simple-scan
     - s3cmd
     - tree
     - unzip

@@ -38,12 +38,10 @@ autoinstall:
     - amberol
     - bind9-dnsutils
     - bind9-utils
+    - buildah
     - chrony
     - curl
     - direnv
-    - docker.io
-    - docker-buildx
-    - docker-compose-v2
     - flameshot
     - fonts-cascadia-code
     - fragments
@@ -70,6 +68,9 @@ autoinstall:
     - strace
     - pgcli
     - pipx
+    - podman
+    - podman-compose
+    - podman-toolbox
     - powertop
     - python3-pip
     - showtime
@@ -176,9 +177,6 @@ autoinstall:
     # Remove unwanted packages and cleanup dependencies
     - curtin in-target --target=/target -- apt remove --purge -y rsyslog unattended-upgrades
     - curtin in-target --target=/target -- apt autoremove --purge -y
-    # Manage services
-    - curtin in-target --target=/target -- systemctl disable docker.service
-    - curtin in-target --target=/target -- systemctl enable docker.socket
     # Mount /tmp as a tmpfs
     - curtin in-target --target=/target -- systemctl enable /usr/lib/systemd/system/tmp.mount
     # Disable Bluetooth auto enable
@@ -193,14 +191,12 @@ autoinstall:
     hostname: foton
     manage_etc_hosts: true
     # Users and groups
-    groups:
-      - docker
     users:
       - name: fbobin
         gecos: "Florian Bobin"
         hashed_passwd: "<redacted>"
         lock_passwd: false
-        groups: ['adm','docker','plugdev','sudo','systemd-journal']
+        groups: ['adm','plugdev','sudo','systemd-journal']
         shell: /usr/bin/zsh
     # System configurations
     write_files:
@@ -234,19 +230,6 @@ autoinstall:
           Defaults insults
           Defaults lecture=never
           Defaults passwd_timeout=1
-      - path: /etc/docker/daemon.json
-        owner: 'root:root'
-        permissions: '0644'
-        content: |
-          {
-            "iptables": true,
-            "live-restore": true,
-            "userland-proxy": false,
-            "features": {
-              "buildkit": true
-            },
-            "cgroup-parent": "docker.slice"
-          }
     # Snap
     snap:
       commands:

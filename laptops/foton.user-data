@@ -124,6 +124,7 @@ autoinstall:
         ptable: gpt
         path: /dev/nvme0n1
         preserve: false
+        wipe: superblock-recursive
       ## Root disk partitions
       # efi partition
       - id: nvme-efi-part

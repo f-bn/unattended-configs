@@ -260,13 +260,12 @@ autoinstall:
           network:
             version: 2
             wifis:
-              wlp0s20f3-freebox-1aba38-5g:
+              wlp0s20f3-freebox-1aba38:
                 renderer: NetworkManager
                 match:
                   name: "wlp0s20f3"
                 dhcp4: true
                 dhcp6: true
-                activation-mode: manual
                 access-points:
                   "Freebox-1ABA38_5G":
                     auth:
@@ -279,18 +278,6 @@ autoinstall:
                         wifi-security.auth-alg: "open"
                         ipv6.addr-gen-mode: "default"
                         ipv6.ip6-privacy: "-1"
-                        proxy._: ""
-                networkmanager:
-                  uuid: "00c5cecc-59b3-43c4-bd54-ad4de1034f5d"
-                  name: "Freebox-1ABA38_5G"
-              wlp0s20f3-freebox-1aba38-24g:
-                renderer: NetworkManager
-                match:
-                  name: "wlp0s20f3"
-                dhcp4: true
-                dhcp6: true
-                activation-mode: manual
-                access-points:
                   "Freebox-1ABA38":
                     auth:
                       key-management: "psk"
@@ -302,10 +289,6 @@ autoinstall:
                         wifi-security.auth-alg: "open"
                         ipv6.addr-gen-mode: "default"
                         ipv6.ip6-privacy: "-1"
-                        proxy._: ""
-                networkmanager:
-                  uuid: "97b859ff-a33b-4f9a-ac17-2d8babce7d7e"
-                  name: "Freebox-1ABA38"
       - path: /etc/netplan/50-home-vpn.yaml
         owner: 'root:root'
         permissions: '0600'

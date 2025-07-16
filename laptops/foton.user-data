@@ -272,24 +272,22 @@ autoinstall:
                 access-points:
                   "Freebox-1ABA38_5G":
                     auth:
-                      key-management: "psk"
+                      key-management: "sae"
                       password: "<redacted>"
                     networkmanager:
                       uuid: "00c5cecc-59b3-43c4-bd54-ad4de1034f5d"
                       name: "Freebox-1ABA38_5G"
                       passthrough:
-                        wifi-security.auth-alg: "open"
                         ipv6.addr-gen-mode: "default"
                         ipv6.ip6-privacy: "-1"
                   "Freebox-1ABA38":
                     auth:
-                      key-management: "psk"
+                      key-management: "sae"
                       password: "<redacted>"
                     networkmanager:
                       uuid: "97b859ff-a33b-4f9a-ac17-2d8babce7d7e"
                       name: "Freebox-1ABA38"
                       passthrough:
-                        wifi-security.auth-alg: "open"
                         ipv6.addr-gen-mode: "default"
                         ipv6.ip6-privacy: "-1"
       - path: /etc/netplan/50-home-vpn.yaml

@@ -195,6 +195,9 @@ autoinstall:
     # Hostname
     hostname: foton
     manage_etc_hosts: true
+    # Packages
+    package_update: true
+    package_upgrade: true
     # Users and groups
     groups:
       - docker
@@ -333,8 +336,6 @@ autoinstall:
     # Snap
     snap:
       commands:
-        # Refresh core snaps
-        - [refresh]
         # Allow Bitwarden to use secure storage
         - [connect, bitwarden:password-manager-service]
         # Enable Discord snap to observe system (to avoid errors messages)

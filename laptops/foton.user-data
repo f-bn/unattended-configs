@@ -49,6 +49,7 @@ autoinstall:
     - fragments
     - fzf
     - git
+    - golang-chroma
     - htop
     - httpie
     - intel-gpu-tools

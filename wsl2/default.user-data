@@ -20,6 +20,7 @@ packages:
   - docker-compose-v2
   - fzf
   - git
+  - golang-chroma
   - htop
   - httpie
   - iputils-ping
@@ -39,6 +40,7 @@ packages:
   - s3cmd
   - tree
   - unzip
+  - uuid-runtime
   - vim
   - wget
   - whois

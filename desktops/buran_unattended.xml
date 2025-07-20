@@ -346,7 +346,7 @@ Set-ItemProperty -LiteralPath $key -Name 'ConfigureStartPins' -Value $json -Type
 		<File path="C:\Windows\Setup\Scripts\SetColorTheme.ps1">
 $lightThemeSystem = 0;
 $lightThemeApps = 0;
-$accentColorOnStart = 1;
+$accentColorOnStart = 0;
 $enableTransparency = 1;
 $htmlAccentColor = '#0078D4';
 &amp; {
@@ -490,9 +490,6 @@ $scripts = @(
 	};
 	{
 		net.exe accounts /maxpwage:UNLIMITED;
-	};
-	{
-		icacls.exe C:\ /remove:g "*S-1-5-11"
 	};
 	{
 		Set-ExecutionPolicy -Scope 'LocalMachine' -ExecutionPolicy 'RemoteSigned' -Force;
@@ -761,74 +758,6 @@ try {
     Write-Host "Failed to update WSL: $($_.Exception.Message)" -ForegroundColor Red;
 }
 		</File>
-		<File path="C:\Windows\Setup\Scripts\MountNASShares.ps1">
-# NAS Share Mounting Script
-# Configure your NAS shares below
-
-# Define your NAS shares
-$nasShares = @(
-    @{
-        UncPath = "\\polis\personal"
-        DriveLetter = "Y:"
-        Username = "fbobin"
-        Password = "<redacted>"
-        Description = "personal"
-    },
-    @{
-        UncPath = "\\polis\media"
-        DriveLetter = "Z:"
-        Username = "fbobin"
-        Password = "<redacted>"
-        Description = "media"
-    }
-);
-
-function Mount-NASShare {
-    param(
-        [string]$UncPath,
-        [string]$DriveLetter,
-        [string]$Username,
-        [string]$Password,
-        [string]$Description
-    )
-    
-    try {
-        Write-Host "Mounting $Description ($UncPath) to $DriveLetter..." -ForegroundColor Yellow;
-        
-        # Remove existing mapping if it exists
-        if (Get-PSDrive -Name ($DriveLetter.TrimEnd(':')) -ErrorAction SilentlyContinue) {
-            Write-Host "Removing existing mapping for $DriveLetter..." -ForegroundColor Yellow;
-            net use $DriveLetter /delete /yes;
-        }
-        
-        # Create credential object
-        $securePassword = ConvertTo-SecureString $Password -AsPlainText -Force;
-        $credential = New-Object System.Management.Automation.PSCredential($Username, $securePassword);
-        
-        # Mount the share with persistence
-        $result = net use $DriveLetter $UncPath /user:$Username $Password /persistent:yes;
-        
-        if ($LASTEXITCODE -eq 0) {
-            Write-Host "Successfully mounted $Description to $DriveLetter" -ForegroundColor Green;
-        } else {
-            Write-Host "Failed to mount $Description (Exit code: $LASTEXITCODE)" -ForegroundColor Red;
-            Write-Host "Error output: $result" -ForegroundColor Red;
-        }
-        
-    } catch {
-        Write-Host "Error mounting $Description : $($_.Exception.Message)" -ForegroundColor Red;
-    }
-}
-
-Write-Host "Starting NAS share mounting..." -ForegroundColor Green;
-
-# Mount each configured share
-foreach ($share in $nasShares) {
-    Mount-NASShare -UncPath $share.UncPath -DriveLetter $share.DriveLetter -Username $share.Username -Password $share.Password -Description $share.Description;
-}
-
-Write-Host "NAS share mounting completed." -ForegroundColor Green;
-		</File>
 		<File path="C:\Windows\Setup\Scripts\FirstLogon.ps1">
 $scripts = @(
 	{
@@ -836,14 +765,6 @@ $scripts = @(
 	};
 	{
 		Disable-ComputerRestore -Drive 'C:\';
-	};
-	{
-		try {
-			Write-Host "Mounting NAS shares...";
-			Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\MountNASShares.ps1' -Raw | Invoke-Expression;
-		} catch {
-			Write-Host "Failed to mount NAS shares: $($_.Exception.Message)";
-		}
 	};
 	{
 		try {

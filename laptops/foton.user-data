@@ -113,8 +113,6 @@ autoinstall:
       channel: stable
     - name: bw
       channel: stable
-    - name: thunderbird
-      channel: stable
   # - Storage -
   storage:
     swap:

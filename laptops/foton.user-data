@@ -113,6 +113,8 @@ autoinstall:
       channel: stable
     - name: bw
       channel: stable
+    - name: multipass
+      channel: stable
   # - Storage -
   storage:
     swap:

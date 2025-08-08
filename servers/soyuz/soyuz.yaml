@@ -157,7 +157,7 @@ storage:
           makestep 1.0 3
           rtcsync
           driftfile /var/lib/chrony/drift
-    - path: /etc/zincati/config.d/10-rollout-wariness.toml
+    - path: /etc/zincati/config.d/80-rollout-wariness.toml
       mode: 0644
       contents:
         inline: |
@@ -165,7 +165,7 @@ storage:
           #
           [identity]
           rollout_wariness = 0.25
-    - path: /etc/zincati/config.d/10-updates-strategy.toml
+    - path: /etc/zincati/config.d/80-updates-strategy.toml
       mode: 0644
       contents:
         inline: |

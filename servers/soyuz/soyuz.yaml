@@ -251,6 +251,8 @@ systemd:
       enabled: true
     - name: podman-auto-update.timer
       enabled: true
+    - name: bootloader-update.service
+      enabled: true
     # Mounts (local)
     - name: var-lib-deployments.mount
       enabled: true

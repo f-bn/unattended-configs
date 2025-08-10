@@ -15,7 +15,7 @@ storage:
   filesystems:
     - device: /dev/sda
       format: xfs
-      wipe_filesystem: true
+      wipe_filesystem: false
   directories:
     - path: /etc/deployments
       mode: 0755

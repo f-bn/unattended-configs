@@ -204,15 +204,12 @@ storage:
             "nofile=65536:65536"
           ]
           log_driver = "journald"
-          userns = "auto"
-          ipcns = "private"
           [network]
           network_backend = "netavark"
           [engine]
           cgroup_manager = "systemd"
           database_backend = "sqlite"
           events_logger = "journald"
-          infra_image = "registry.k8s.io/pause:3.9"
     - path: /etc/containers/toolbox.conf
       mode: 0644
       overwrite: true

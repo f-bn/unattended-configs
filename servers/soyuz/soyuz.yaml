@@ -250,7 +250,7 @@ systemd:
     - name: podman.service
       enabled: true
       dropins:
-        - name: 10-disable-timeout.conf
+        - name: 10-override-exec.conf
           contents: |
             [Service]
             ExecStart=

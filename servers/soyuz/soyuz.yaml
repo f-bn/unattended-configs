@@ -69,6 +69,7 @@ storage:
           #
           # Virtual Memory -
           vm.max_map_count = 262144
+          vm.swappiness = 10
           # - Networking -
           net.core.rmem_max = 134217728
           net.core.wmem_max = 134217728
@@ -260,6 +261,32 @@ systemd:
       enabled: true
     - name: bootloader-update.service
       enabled: true
+    # Swap
+    - name: var-swap-init.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Initialize swapfile on /var/swap
+        RequiresMountsFor=/var
+        DefaultDependencies=no
+        ConditionPathExists=!/var/swap
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/sbin/mkswap --file --size 8192m /var/swap
+        RemainAfterExit=yes
+        [Install]
+        WantedBy=multi-user.target
+    - name: var-swap.swap
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Enable swapfile on /var/swap
+        Requires=var-swap-init.service
+        After=var-swap-init.service
+        [Swap]
+        What=/var/swap
+        [Install]
+        WantedBy=multi-user.target
     # Mounts (local)
     - name: var-lib-deployments.mount
       enabled: true

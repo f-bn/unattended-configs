@@ -12,8 +12,21 @@ kernel_arguments:
     # Disable SELinux (at kernel level)
     - selinux=0
 storage:
-  filesystems:
+  disks:
     - device: /dev/sda
+      wipe_table: false
+      partitions:
+        - label: logs
+          number: 1
+          size_mib: 20480
+        - label: containers_data
+          number: 2
+          size_mib: 0
+  filesystems:
+    - device: /dev/disk/by-partlabel/logs
+      format: xfs
+      wipe_filesystem: true
+    - device: /dev/disk/by-partlabel/containers_data
       format: xfs
       wipe_filesystem: false
   directories:
@@ -21,9 +34,9 @@ storage:
       mode: 0755
     - path: /var/lib/deployments
       mode: 0755
-    - path: /mnt/nas/music
+    - path: /var/mnt/nas/music
       mode: 0755
-    - path: /mnt/nas/backups
+    - path: /var/mnt/nas/backups
       mode: 0755
   files:
     - path: /etc/hostname
@@ -141,7 +154,7 @@ storage:
           Storage=persistent
           Compress=yes
           SystemMaxFileSize=256M
-          SystemMaxUse=10G
+          SystemKeepFree=5G
           RuntimeMaxUse=100M
           MaxRetentionSec=3day
     - path: /etc/chrony.conf
@@ -279,6 +292,19 @@ systemd:
         [Install]
         WantedBy=multi-user.target
     # Mounts (local)
+    - name: var-log.mount
+      enabled: true
+      contents: |
+        [Unit]
+        Description=System logs and journal
+        Before=local-fs.target
+        [Mount]
+        Type=xfs
+        What=/dev/disk/by-partlabel/logs
+        Where=/var/log
+        Options=defaults
+        [Install]
+        WantedBy=local-fs.target
     - name: var-lib-deployments.mount
       enabled: true
       contents: |
@@ -287,7 +313,7 @@ systemd:
         Before=local-fs.target
         [Mount]
         Type=xfs
-        What=/dev/sda
+        What=/dev/disk/by-partlabel/containers_data
         Where=/var/lib/deployments
         Options=defaults,pquota
         [Install]

@@ -258,7 +258,7 @@ systemd:
           contents: |
             [Service]
             ExecStart=
-            ExecStart=/usr/bin/podman --log-level=warn system service -t 0
+            ExecStart=/usr/bin/podman --log-level=info system service -t 0
     - name: podman.socket
       enabled: true
     - name: podman-auto-update.timer

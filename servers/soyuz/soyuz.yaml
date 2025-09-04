@@ -11,6 +11,8 @@ kernel_arguments:
   should_exist:
     # Disable SELinux (at kernel level)
     - selinux=0
+    # Disable kernel audit logging
+    - audit=0
 storage:
   disks:
     - device: /dev/sda
@@ -19,14 +21,14 @@ storage:
         - label: logs
           number: 1
           size_mib: 20480
-        - label: containers_data
+        - label: containers-data
           number: 2
           size_mib: 0
   filesystems:
     - device: /dev/disk/by-partlabel/logs
       format: xfs
       wipe_filesystem: true
-    - device: /dev/disk/by-partlabel/containers_data
+    - device: /dev/disk/by-partlabel/containers-data
       format: xfs
       wipe_filesystem: false
   directories:
@@ -58,8 +60,8 @@ storage:
           127.0.0.1     localhost localhost.localdomain localhost4 localhost4.localdomain4
           ::1           localhost localhost.localdomain localhost6 localhost6.localdomain6
           # Custom entries
-          192.168.144.2 polis.homelab.lan polis
-          192.168.144.2 nas.homelab.lan   nas
+          192.168.144.2 polis.homeprod.lan polis
+          192.168.144.2 nas.homeprod.lan   nas
     - path: /etc/subuid
       mode: 0644
       overwrite: true
@@ -116,7 +118,7 @@ storage:
           method=manual
           address1=192.168.144.3/24,192.168.144.1
           dns=192.168.144.2;
-          dns-search=homelab.lan
+          dns-search=homeprod.lan
           may-fail=false
     - path: /etc/ssh/sshd_config.d/10-override.conf
       mode: 0644
@@ -224,6 +226,7 @@ storage:
           cgroup_manager = "systemd"
           database_backend = "sqlite"
           events_logger = "journald"
+          healthcheck_events = false
     - path: /etc/containers/toolbox.conf
       mode: 0644
       overwrite: true
@@ -258,7 +261,7 @@ systemd:
           contents: |
             [Service]
             ExecStart=
-            ExecStart=/usr/bin/podman --log-level=info system service -t 0
+            ExecStart=/usr/bin/podman --log-level=warn system service -t 0
     - name: podman.socket
       enabled: true
     - name: podman-auto-update.timer
@@ -313,7 +316,7 @@ systemd:
         Before=local-fs.target
         [Mount]
         Type=xfs
-        What=/dev/disk/by-partlabel/containers_data
+        What=/dev/disk/by-partlabel/containers-data
         Where=/var/lib/deployments
         Options=defaults,pquota
         [Install]
@@ -328,7 +331,7 @@ systemd:
         After=network-online.target
         [Mount]
         Type=nfs
-        What=nas.homelab.lan:/volume1/media/music
+        What=nas.homeprod.lan:/volume1/media/music
         Where=/var/mnt/nas/music
         Options=defaults,nfsvers=4.1,rsize=131072,wsize=131072,ac,ro
         [Install]
@@ -342,7 +345,7 @@ systemd:
         After=network-online.target
         [Mount]
         Type=nfs
-        What=nas.homelab.lan:/volume1/backups
+        What=nas.homeprod.lan:/volume1/backups
         Where=/var/mnt/nas/backups
         Options=defaults,nfsvers=4.1,rsize=131072,wsize=131072,ac,noexec,rw
         [Install]

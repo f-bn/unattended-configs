@@ -144,7 +144,6 @@ storage:
           IgnoreRhosts yes
           MaxAuthTries 5
           UseDNS no
-          AcceptEnv LANG LC_*
     - path: /etc/systemd/journald.conf
       mode: 0644
       contents:

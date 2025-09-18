@@ -44,7 +44,6 @@ autoinstall:
     - docker.io
     - docker-buildx
     - docker-compose-v2
-    - flameshot
     - fonts-cascadia-code
     - fragments
     - fzf

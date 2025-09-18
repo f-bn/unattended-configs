@@ -71,7 +71,6 @@ autoinstall:
     - strace
     - pgcli
     - pipx
-    - ptyxis
     - powertop
     - python3-pip
     - showtime
@@ -115,6 +114,9 @@ autoinstall:
       channel: stable
     - name: multipass
       channel: stable
+    - name: ghostty
+      channel: stable
+      classic: true
   # - Storage -
   storage:
     swap:

@@ -254,6 +254,8 @@ autoinstall:
     # Snap
     snap:
       commands:
+        # Use Firefox with core24 base
+        - [refresh, firefox, --channel=latest/candidate/core24]
         # Allow Bitwarden to use secure storage
         - [connect, bitwarden:password-manager-service]
         # Enable Discord snap to observe system (to avoid errors messages)

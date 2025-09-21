@@ -79,6 +79,7 @@ autoinstall:
     - unzip
     - vainfo
     - vim
+    - vlc
     - wget
     - whois
     - wireguard-tools

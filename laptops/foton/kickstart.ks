@@ -54,6 +54,7 @@ repo --name=fedora-cisco-openh264 --mirrorlist="https://mirrors.fedoraproject.or
 @printing
 
 # Additional packages
+alsa-sof-firmware
 bind-utils
 cascadia-fonts-all
 direnv

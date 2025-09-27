@@ -208,7 +208,7 @@ EOF
 chmod +x /usr/local/bin/bw
 
 # Install chezmoi from GitHub
-curl -sfL -o /usr/local/bin/chezmoi https://github.com/twpayne/chezmoi/releases/latest/download/chezmoi-linux-amd64
+curl -fL -o /usr/local/bin/chezmoi https://github.com/twpayne/chezmoi/releases/latest/download/chezmoi-linux-amd64
 chmod +x /usr/local/bin/chezmoi
 
 # Hide GRUB menu

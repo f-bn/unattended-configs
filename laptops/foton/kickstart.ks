@@ -189,6 +189,7 @@ FLATPAK_APPS=(
     "io.bassi.Amberol"
     "io.missioncenter.MissionCenter"
     "me.iepure.devtoolbox"
+    "org.gnome.Extensions"
     "org.gnome.Showtime"
     "org.telegram.desktop"
     "org.videolan.VLC"

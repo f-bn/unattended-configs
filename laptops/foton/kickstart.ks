@@ -37,7 +37,7 @@ rootpw --lock
 user --name=fbobin --gecos="Florian Bobin" --groups="wheel,systemd-journal,docker" --shell=/usr/bin/zsh --password="<redacted>" --iscrypted
 
 # - Authentication -
-authselect select local with-fingerprint with-pam-u2f with-pam-u2f-2fa
+authselect select local with-fingerprint with-pam-u2f with-pam-u2f-2fa with-mdns4
 
 # - Repositories -
 url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch"
@@ -50,11 +50,12 @@ repo --name=fedora-cisco-openh264 --mirrorlist="https://mirrors.fedoraproject.or
 @firefox
 @fonts
 @gnome-desktop
+@hardware-support
+@multimedia
 @networkmanager-submodules
 @printing
 
-# Additional packages
-alsa-sof-firmware
+# Packages
 bind-utils
 cascadia-fonts-all
 direnv
@@ -78,11 +79,13 @@ libjpeg-turbo-devel
 libva-intel-media-driver
 libva-utils
 lm_sensors
+lshw
 moby-engine
 mycli
 neovim
 nmap
 pamu2fcfg
+pciutils
 pgcli
 pipx
 plymouth-system-theme
@@ -103,8 +106,6 @@ yt-dlp
 zlib-devel
 zsh
 zstd
-
-# Unwanted packages
 -abrt*
 -decibels
 -gnome-boxes
@@ -122,13 +123,16 @@ zstd
 -yelp
 -zram-generator-defaults
 
-# Uneeded firmwares
+# Firmwares
 -amd-*-firmware
 -atheros-firmware
 -brcmfmac-firmware
 -cirrus-audio-firmware
+-libertas-firmware
+-mt7xxx-firmware
 -nvidia-gpu-firmware
 -nxpwireless-firmware
+-qcom-wwan-firmware
 -tiwilink-firmware
 %end
 
@@ -173,7 +177,16 @@ tee /etc/dnf/dnf.conf > /dev/null << 'EOF'
 #
 [main]
 max_parallel_downloads=5
-excludepkgs=amd-*-firmware atheros-firmware brcmfmac-firmware cirrus-audio-firmware nvidia-gpu-firmware nxpwireless-firmware tiwilink-firmware
+excludepkgs=amd-*-firmware \
+            atheros-firmware \
+            brcmfmac-firmware \
+            cirrus-audio-firmware \
+            libertas-firmware \
+            mt7xxx-firmware \
+            nvidia-gpu-firmware \
+            nxpwireless-firmware \
+            qcom-wwan-firmware \
+            tiwilink-firmware
 EOF
 
 # Install RPM Fusion repositories
@@ -191,6 +204,7 @@ FLATPAK_APPS=(
     "io.missioncenter.MissionCenter"
     "me.iepure.devtoolbox"
     "org.gnome.Extensions"
+    "org.gnome.Firmware"
     "org.gnome.Showtime"
     "org.telegram.desktop"
     "org.videolan.VLC"

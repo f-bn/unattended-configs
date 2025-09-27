@@ -15,9 +15,9 @@ In addition to these configurations, I use `chezmoi` for managing dotfiles: http
 
 **Devices (legacy)**
 
-| Device         | Type      | Operating system | Chassis                     | Configuration | Status    |
-| :--------------| :---------| :----------------| :---------------------------| :-------------| :---------|
-| **proton**     | Server    | Ubuntu 24.04 LTS | ASRock DeskMini X300        | [autoinstall.user-data](./servers/proton/autoinstall.user-data) | ✅ |
+| Device         | Type      | Operating system | Chassis                     | Configuration |
+| :--------------| :---------| :----------------| :---------------------------| :-------------|
+| **proton**     | Server    | Ubuntu 24.04 LTS | ASRock DeskMini X300        | [autoinstall.user-data](./servers/proton/autoinstall.user-data) |
 
 ### How-to
 

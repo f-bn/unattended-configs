@@ -73,6 +73,7 @@ igt-gpu-tools
 jq
 kubernetes-client
 kustomize
+libjpeg-turbo-devel
 libva-intel-media-driver
 libva-utils
 lm_sensors
@@ -85,6 +86,7 @@ pgcli
 pipx
 plymouth-system-theme
 powertop
+python3-devel
 python3-pip
 s3cmd
 skopeo
@@ -97,6 +99,7 @@ yamllint
 yaru-theme
 yq
 yt-dlp
+zlib-devel
 zsh
 zstd
 

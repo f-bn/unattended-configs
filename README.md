@@ -8,11 +8,16 @@ In addition to these configurations, I use `chezmoi` for managing dotfiles: http
 
 | Device         | Type      | Operating system | Chassis                     | Configuration | Status    |
 | :--------------| :---------| :----------------| :---------------------------| :-------------| :---------|
-| **buran**      | Desktop   | Windows 11 24H2  | Custom                      | [unattended.xml](./desktops/buran_unattended.xml) | ✅ |
+| **buran**      | Desktop   | Windows 11 24H2  | Custom                      | [unattended.xml](./desktops/buran/unattended.xml) | ✅ |
 | **buran**      | WSL       | Ubuntu 25.10     | Virtual machine (WSL2)      | [default.user-data](./wsl2/default.user-data)     | ✅ |
-| **foton**      | Laptop    | Ubuntu 25.10     | Thinkpad P14s Gen 5 (Intel) | [foton.user-data](./laptops/foton.user-data)      | ✅ |
-| **proton**     | Server    | Ubuntu 24.04 LTS | ASRock DeskMini X300        | [proton.user-data](./servers/proton/proton.user-data) | ✅ |
-| **soyuz**      | Server    | Fedora CoreOS 42 | Beelink SER5 PRO            | [soyuz.yaml](./servers/soyuz/soyuz.yaml) | ✅ |
+| **foton**      | Laptop    | Fedora 43        | Thinkpad P14s Gen 5 (Intel) | [kickstart.ks](./laptops/foton/kickstart.ks)      | ✅ |
+| **soyuz**      | Server    | Fedora CoreOS 42 | Beelink SER5 PRO            | [ignition.yaml](./servers/soyuz/ignition.yaml)    | ✅ |
+
+**Devices (legacy)**
+
+| Device         | Type      | Operating system | Chassis                     | Configuration | Status    |
+| :--------------| :---------| :----------------| :---------------------------| :-------------| :---------|
+| **proton**     | Server    | Ubuntu 24.04 LTS | ASRock DeskMini X300        | [autoinstall.user-data](./servers/proton/autoinstall.user-data) | ✅ |
 
 ### How-to
 
@@ -41,7 +46,8 @@ The `ventoy.json` file defines which unattended file(s) is to be used with a giv
 
 In the following configuration, I define that:
   - **Ubuntu Server** ISOs are linked to my *proton* server unattended configuration
-  - **Ubuntu Desktop** ISOs are linked to my *foton* laptop unattended configuration
+  - **Ubuntu Desktop** ISOs (stable and beta) are linked to my *foton* laptop unattended configuration
+  - **Fedora** ISOs (stable and beta) are linked to my *foton* laptop unattended kickstart configuration
   - **Windows 11** ISOs are linked to my *buran* desktop unattended configuration
 
 ```json
@@ -69,6 +75,18 @@ In the following configuration, I define that:
             "image": "/ubuntu-**.**.*-desktop-amd64.iso",
             "template": [
                 "/autoinstall/laptops/foton.user-data"
+            ]
+        },
+        {
+            "image": "/fedora-**-beta.iso",
+            "template": [
+                "/autoinstall/laptops/foton.ks"
+            ]
+        },
+        {
+            "image": "/fedora-**.iso",
+            "template": [
+                "/autoinstall/laptops/foton.ks"
             ]
         },
         {

@@ -25,6 +25,24 @@
             ]
         },
         {
+            "image": "/ubuntu-**.**-beta-desktop-amd64.iso",
+            "template": [
+                "/autoinstall/laptops/foton.user-data"
+            ]
+        },
+        {
+            "image": "/fedora-**-beta.iso",
+            "template": [
+                "/autoinstall/laptops/foton.ks"
+            ]
+        },
+        {
+            "image": "/fedora-**.iso",
+            "template": [
+                "/autoinstall/laptops/foton.ks"
+            ]
+        },
+        {
             "image": "/win11_****.iso",
             "template": [
                 "/autoinstall/desktops/buran_unattended.xml"

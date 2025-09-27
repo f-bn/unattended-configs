@@ -203,7 +203,7 @@ dnf install -y code
 # Wrapper for Bitwarden CLI in Flatpak
 tee /usr/local/bin/bw > /dev/null << 'EOF'
 #!/usr/sbin/sh
-exec flatpak run --command=bw com.bitwarden.desktop
+exec flatpak run --command=bw com.bitwarden.desktop "$@"
 EOF
 chmod +x /usr/local/bin/bw
 

@@ -64,11 +64,15 @@ fzf
 git
 gnome-shell-extension-dash-to-dock
 gnome-tweaks
+go-task
 golang-github-alecthomas-chroma
+helm
 htop
 httpie
 igt-gpu-tools
 jq
+kubernetes-client
+kustomize
 libva-intel-media-driver
 libva-utils
 lm_sensors
@@ -83,6 +87,7 @@ plymouth-system-theme
 powertop
 python3-pip
 s3cmd
+skopeo
 socat
 strace
 tree

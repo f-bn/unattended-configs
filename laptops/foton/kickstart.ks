@@ -98,6 +98,7 @@ socat
 strace
 tree
 unzip
+wget2-wget
 wireguard-tools
 yamllint
 yaru-theme

@@ -13,18 +13,19 @@ In addition to these configurations, I use `chezmoi` for managing dotfiles: http
 | **foton**      | Laptop    | Fedora 43        | Thinkpad P14s Gen 5 (Intel) | [kickstart.ks](./laptops/foton/kickstart.ks)      | ✅ |
 | **soyuz**      | Server    | Fedora CoreOS 42 | Beelink SER5 PRO            | [ignition.yaml](./servers/soyuz/ignition.yaml)    | ✅ |
 
-**Devices (legacy)**
+**Devices (legacy configurations)**
 
 | Device         | Type      | Operating system | Chassis                     | Configuration |
 | :--------------| :---------| :----------------| :---------------------------| :-------------|
 | **buran**      | WSL       | Ubuntu 25.10     | Virtual machine (WSL2)      | [ubuntu.user-data](./wsl2/ubuntu.user-data) |
+| **foton**      | Laptop    | Ubuntu 25.10     | Thinkpad P14s Gen 5 (Intel) | [autoinstall.user-data](./laptops/foton/autoinstall.user-data) |
 | **proton**     | Server    | Ubuntu 24.04 LTS | ASRock DeskMini X300        | [autoinstall.user-data](./servers/proton/autoinstall.user-data) |
 
 ### How-to
 
 **Desktops/Laptop/Servers**
 
-For the desktops, laptops and servers installations, Ventoy `autoinstall` feature is used to pass `autoinstall`/`user-data` (Ubuntu), `kickstart` (Fedora) or `autounattend.xml` (Windows) configuration files to the respective installer.
+For the desktops, laptops and servers installations, Ventoy `autoinstall` feature is used to pass `autoinstall`/`user-data` (Ubuntu), `kickstart.ks` (Fedora) or `autounattend.xml` (Windows) configuration files to the respective installer.
 
 In order to setup Ventoy `autoinstall`, we need to create a hierarchy in the **Ventoy** partition (where ISOs are stored on the USB key) by placing the unattended configurations in expected folders. Here the current hierarchy used for this repository:
 

@@ -96,6 +96,7 @@ s3cmd
 skopeo
 socat
 strace
+systemd-container
 tree
 unzip
 wget2-wget

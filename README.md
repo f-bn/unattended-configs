@@ -9,7 +9,7 @@ In addition to these configurations, I use `chezmoi` for managing dotfiles: http
 | Device         | Type      | Operating system | Chassis                     | Configuration | Status    |
 | :--------------| :---------| :----------------| :---------------------------| :-------------| :---------|
 | **buran**      | Desktop   | Windows 11 24H2  | Custom                      | [unattended.xml](./desktops/buran/unattended.xml) | ✅ |
-| **buran**      | WSL       | Ubuntu 25.10     | Virtual machine (WSL2)      | [default.user-data](./wsl2/default.user-data)     | ✅ |
+| **buran**      | WSL       | Fedora 43        | Virtual machine (WSL2)      | [default.user-data](./wsl2/fedora.user-data)      | ✅ |
 | **foton**      | Laptop    | Fedora 43        | Thinkpad P14s Gen 5 (Intel) | [kickstart.ks](./laptops/foton/kickstart.ks)      | ✅ |
 | **soyuz**      | Server    | Fedora CoreOS 42 | Beelink SER5 PRO            | [ignition.yaml](./servers/soyuz/ignition.yaml)    | ✅ |
 
@@ -17,13 +17,14 @@ In addition to these configurations, I use `chezmoi` for managing dotfiles: http
 
 | Device         | Type      | Operating system | Chassis                     | Configuration |
 | :--------------| :---------| :----------------| :---------------------------| :-------------|
+| **buran**      | WSL       | Ubuntu 25.10     | Virtual machine (WSL2)      | [ubuntu.user-data](./wsl2/ubuntu.user-data) |
 | **proton**     | Server    | Ubuntu 24.04 LTS | ASRock DeskMini X300        | [autoinstall.user-data](./servers/proton/autoinstall.user-data) |
 
 ### How-to
 
 **Desktops/Laptop/Servers**
 
-For the desktops, laptops and servers installations, Ventoy `autoinstall` feature is used to pass `autoinstall`/`user-data` (Ubuntu) or `autounattend.xml` (Windows) configuration files to the respective installer.
+For the desktops, laptops and servers installations, Ventoy `autoinstall` feature is used to pass `autoinstall`/`user-data` (Ubuntu), `kickstart` (Fedora) or `autounattend.xml` (Windows) configuration files to the respective installer.
 
 In order to setup Ventoy `autoinstall`, we need to create a hierarchy in the **Ventoy** partition (where ISOs are stored on the USB key) by placing the unattended configurations in expected folders. Here the current hierarchy used for this repository:
 

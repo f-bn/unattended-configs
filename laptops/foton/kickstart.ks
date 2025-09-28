@@ -78,6 +78,7 @@ kustomize
 libjpeg-turbo-devel
 libva-intel-media-driver
 libva-utils
+linux-firmware
 lm_sensors
 lshw
 moby-engine

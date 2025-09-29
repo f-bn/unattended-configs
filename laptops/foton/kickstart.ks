@@ -78,7 +78,6 @@ kustomize
 libjpeg-turbo-devel
 libva-intel-media-driver
 libva-utils
-linux-firmware
 lm_sensors
 lshw
 moby-engine
@@ -127,12 +126,13 @@ zstd
 -zram-generator-defaults
 
 # Firmwares
+linux-firmware
+mt7xxx-firmware
 -amd-*-firmware
 -atheros-firmware
 -brcmfmac-firmware
 -cirrus-audio-firmware
 -libertas-firmware
--mt7xxx-firmware
 -nvidia-gpu-firmware
 -nxpwireless-firmware
 -qcom-wwan-firmware
@@ -185,7 +185,6 @@ excludepkgs=amd-*-firmware \
             brcmfmac-firmware \
             cirrus-audio-firmware \
             libertas-firmware \
-            mt7xxx-firmware \
             nvidia-gpu-firmware \
             nxpwireless-firmware \
             qcom-wwan-firmware \

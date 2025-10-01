@@ -138,7 +138,6 @@ mt7xxx-firmware
 -libertas-firmware
 -nvidia-gpu-firmware
 -nxpwireless-firmware
--qcom-wwan-firmware
 -tiwilink-firmware
 %end
 
@@ -190,7 +189,6 @@ excludepkgs=amd-*-firmware \
             libertas-firmware \
             nvidia-gpu-firmware \
             nxpwireless-firmware \
-            qcom-wwan-firmware \
             tiwilink-firmware
 EOF
 

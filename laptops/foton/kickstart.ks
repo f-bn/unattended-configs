@@ -25,6 +25,9 @@ timesource --ntp-pool=1.fr.pool.ntp.org
 timesource --ntp-pool=2.fr.pool.ntp.org
 timesource --ntp-pool=3.fr.pool.ntp.org
 
+# - Bootloader -
+bootloader --append="preempt=full"
+
 # - Storage -
 zerombr
 clearpart --all --drives=nvme0n1

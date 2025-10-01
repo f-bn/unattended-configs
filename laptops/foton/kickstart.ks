@@ -64,6 +64,7 @@ cascadia-fonts-all
 direnv
 docker-buildx
 docker-compose
+fastfetch
 fprintd-pam
 fzf
 git

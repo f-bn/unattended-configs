@@ -13,6 +13,7 @@ packages:
   - direnv
   - docker-buildx
   - docker-compose
+  - fastfetch
   - fzf
   - git
   - go-task

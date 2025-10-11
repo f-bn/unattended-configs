@@ -15,9 +15,10 @@ packages:
   - bind9-utils
   - curl
   - direnv
-  - docker.io
   - docker-buildx
   - docker-compose-v2
+  - docker.io
+  - fastfetch
   - fzf
   - git
   - golang-chroma
@@ -30,14 +31,16 @@ packages:
   - neovim
   - netcat-openbsd
   - nmap
-  - rsync
-  - skopeo
-  - socat
-  - strace
   - pgcli
   - pipx
   - python3-pip
+  - rsync
   - s3cmd
+  - skopeo
+  - socat
+  - strace
+  - systemd-container
+  - tcpdump
   - tree
   - unzip
   - uuid-runtime
@@ -54,12 +57,16 @@ snap:
     # Refresh core snaps
     - [refresh]
     # Install snap packages
-    - [install, chezmoi, --channel=stable, --classic]
     - [install, kubectl, --channel=stable, --classic]
-    - [install, terraform, --channel=stable, --classic]
     - [install, bw, --channel=stable]
-# - System configurations -
 write_files:
+  ## Binaries
+  - path: /usr/local/bin/chezmoi
+    owner: 'root:root'
+    permissions: '0755'
+    source:
+      uri: https://github.com/twpayne/chezmoi/releases/latest/download/chezmoi-linux-amd64
+  ## System configurations
   - path: /etc/wsl.conf
     append: true
     content: |
@@ -115,17 +122,13 @@ write_files:
       }
 # - Late commands -
 runcmd:
+  # Switch to GNU coreutils
+  - apt remove --allow-remove-essential -y coreutils-from-uutils
   # Remove uneeded packages
-  - apt remove -y --autoremove --purge unattended-upgrades rsyslog cron packagekit netavark
+  - apt remove -y --purge unattended-upgrades netavark rsyslog cron 
   - apt autoremove --purge -y
   # Manage services
-  - systemctl disable docker.service
+  - systemctl disable docker.service packagekit.service
   - systemctl enable docker.socket
   # Mount /tmp as a tmpfs
   - systemctl enable /usr/lib/systemd/system/tmp.mount
-# Reboot machine at end of Cloud-Init run
-power_state:
-  delay: now
-  mode: poweroff
-  condition: systemctl is-system-running | grep -q 'running'
-  timeout: 30

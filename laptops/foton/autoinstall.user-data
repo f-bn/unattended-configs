@@ -41,12 +41,15 @@ autoinstall:
     - chrony
     - curl
     - direnv
-    - docker.io
     - docker-buildx
     - docker-compose-v2
+    - docker.io
+    - fastfetch
     - fonts-cascadia-code
+    - fq
     - fzf
     - git
+    - gnome-tweaks
     - golang-chroma
     - htop
     - httpie
@@ -55,26 +58,26 @@ autoinstall:
     - iputils-ping
     - jq
     - less
-    - libfuse2
     - libpam-u2f
     - lm-sensors
     - mycli
-    - neovim
     - netcat-openbsd
+    - neovim
     - nmap
     - nvme-cli
-    - rsync
-    - rtorrent
-    - skopeo
-    - socat
-    - strace
     - pgcli
     - pipx
     - powertop
     - python3-pip
-    - showtime
-    - simple-scan
+    - rsync
     - s3cmd
+    - simple-scan
+    - skopeo
+    - socat
+    - strace
+    - systemd-container
+    - transmission-gtk
+    - tcpdump
     - tree
     - unzip
     - vainfo
@@ -97,9 +100,6 @@ autoinstall:
       classic: true
     - name: discord
       channel: stable
-    - name: kubectl
-      channel: stable
-      classic: true
     - name: bruno
       channel: stable
     - name: bitwarden
@@ -107,6 +107,11 @@ autoinstall:
     - name: bw
       channel: stable
     - name: multipass
+      channel: stable
+    - name: kubectl
+      channel: stable
+      classic: true
+    - name: telegram-desktop
       channel: stable
   # - Storage -
   storage:
@@ -170,8 +175,10 @@ autoinstall:
     install-server: false
   # - Late commands -
   late-commands:
+    # Switch to GNU coreutils
+    - curtin in-target --target=/target -- apt remove --allow-remove-essential -y coreutils-from-uutils
     # Remove unwanted packages and cleanup dependencies
-    - curtin in-target --target=/target -- apt remove --purge -y rsyslog unattended-upgrades
+    - curtin in-target --target=/target -- apt remove --purge -y rsyslog unattended-upgrades seahorse gnome-characters netavark
     - curtin in-target --target=/target -- apt autoremove --purge -y
     # Manage services
     - curtin in-target --target=/target -- systemctl disable docker.service
@@ -182,6 +189,10 @@ autoinstall:
     - curtin in-target --target=/target -- sed -ie 's|^AutoEnable=.*|AutoEnable=false|' /etc/bluetooth/main.conf
     # Enable fingerprint authentication
     - curtin in-target --target=/target -- pam-auth-update --enable fprintd
+    # Manage kernel parameters
+    # (added parameters: preempt=full)
+    - curtin in-target --target=/target -- sed -ie 's/^GRUB_CMDLINE_LINUX_DEFAULT="/&preempt=full /' /etc/default/grub
+    - curtin in-target --target=/target -- update-grub
   # - Post-Installation (cloud-init) -
   user-data:
     # Hostname
@@ -205,7 +216,8 @@ autoinstall:
       - path: /usr/local/bin/chezmoi
         owner: 'root:root'
         permissions: '0755'
-        uri: https://github.com/twpayne/chezmoi/releases/latest/download/chezmoi-linux-amd64
+        source:
+          uri: https://github.com/twpayne/chezmoi/releases/latest/download/chezmoi-linux-amd64
     ## System configurations
       - path: /etc/sysctl.d/90-custom.conf
         owner: 'root:root'
@@ -251,7 +263,7 @@ autoinstall:
     # Snap
     snap:
       commands:
-        # Use Firefox with core24 base
+        # Use Firefox channel with core24 base
         - [refresh, firefox, --channel=latest/candidate/core24]
         # Allow Bitwarden to use secure storage
         - [connect, bitwarden:password-manager-service]

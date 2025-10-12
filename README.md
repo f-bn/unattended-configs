@@ -9,7 +9,7 @@ In addition to these configurations, I use `chezmoi` for managing dotfiles: http
 | Device         | Type      | Operating system | Chassis                     | Configuration | Status    |
 | :--------------| :---------| :----------------| :---------------------------| :-------------| :---------|
 | **buran**      | Desktop   | Windows 11 24H2  | Custom                      | [unattended.xml](./desktops/buran/unattended.xml) | ✅ |
-| **buran**      | WSL       | Ubuntu 25.10     | Virtual machine (WSL2)      | [ubuntu.user-data](./wsl2/ubuntu.user-data)       | ✅ |
+| **buran**      | WSL       | Ubuntu 24.04     | Virtual machine (WSL2)      | [ubuntu.user-data](./wsl2/ubuntu.user-data)       | ✅ |
 | **foton**      | Laptop    | Ubuntu 25.10     | Thinkpad P14s Gen 5 (Intel) | [autoinstall.user-data](./laptops/foton/autoinstall.user-data)| ✅ |
 | **soyuz**      | Server    | Fedora CoreOS 42 | Beelink SER5 PRO            | [ignition.yaml](./servers/soyuz/ignition.yaml)    | ✅ |
 

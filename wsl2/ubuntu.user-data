@@ -18,7 +18,6 @@ packages:
   - docker-buildx
   - docker-compose-v2
   - docker.io
-  - fastfetch
   - fzf
   - git
   - golang-chroma
@@ -122,13 +121,15 @@ write_files:
       }
 # - Late commands -
 runcmd:
-  # Switch to GNU coreutils
-  - apt remove --allow-remove-essential -y coreutils-from-uutils
   # Remove uneeded packages
-  - apt remove -y --purge unattended-upgrades netavark rsyslog cron 
+  - apt remove -y --purge unattended-upgrades netavark rsyslog cron packagekit
   - apt autoremove --purge -y
   # Manage services
-  - systemctl disable docker.service packagekit.service
+  - systemctl disable docker.service
   - systemctl enable docker.socket
-  # Mount /tmp as a tmpfs
-  - systemctl enable /usr/lib/systemd/system/tmp.mount
+# Reboot machine at end of Cloud-Init run
+power_state:
+  delay: now
+  mode: poweroff
+  condition: systemctl is-system-running | grep -q 'running'
+  timeout: 30

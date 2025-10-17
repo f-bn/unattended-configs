@@ -17,8 +17,6 @@ In addition to these configurations, I use `chezmoi` for managing dotfiles: http
 
 | Device         | Type      | Operating system | Chassis                     | Configuration |
 | :--------------| :---------| :----------------| :---------------------------| :-------------|
-| **buran**      | WSL       | Fedora 43        | Virtual machine (WSL2)      | [fedora.user-data](./wsl2/fedora.user-data)) |
-| **foton**      | Laptop    | Fedora 43        | Thinkpad P14s Gen 5 (Intel) | [kickstart.ks](./laptops/foton/kickstart.ks) |
 | **proton**     | Server    | Ubuntu 24.04 LTS | ASRock DeskMini X300        | [autoinstall.user-data](./servers/proton/autoinstall.user-data) |
 
 ### How-to
@@ -49,7 +47,6 @@ The `ventoy.json` file defines which unattended file(s) is to be used with a giv
 In the following configuration, I define that:
   - **Ubuntu Server** ISOs are linked to my *proton* server unattended configuration
   - **Ubuntu Desktop** ISOs (stable and beta) are linked to my *foton* laptop unattended configuration
-  - **Fedora** ISOs (stable and beta) are linked to my *foton* laptop unattended kickstart configuration
   - **Windows 11** ISOs are linked to my *buran* desktop unattended configuration
 
 ```json
@@ -77,18 +74,6 @@ In the following configuration, I define that:
             "image": "/ubuntu-**.**.*-desktop-amd64.iso",
             "template": [
                 "/autoinstall/laptops/foton.user-data"
-            ]
-        },
-        {
-            "image": "/fedora-**-beta.iso",
-            "template": [
-                "/autoinstall/laptops/foton.ks"
-            ]
-        },
-        {
-            "image": "/fedora-**.iso",
-            "template": [
-                "/autoinstall/laptops/foton.ks"
             ]
         },
         {

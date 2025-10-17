@@ -120,15 +120,14 @@ autoinstall:
     swap:
       size: 0 # Disable creation of swapfile
     config:
-      ## Root disk
+      # - Root disk -
       - id: nvme-disk
         type: disk
         ptable: gpt
         path: /dev/nvme0n1
         preserve: false
         wipe: superblock-recursive
-      ## Root disk partitions
-      # efi partition
+      # - EFI partition -
       - id: nvme-efi-part
         type: partition
         device: nvme-disk
@@ -144,33 +143,64 @@ autoinstall:
         type: mount
         device: nvme-efi-fs
         path: /boot/efi
-      # root partition
-      - id: nvme-root-part
+      # - Boot partition -
+      - id: nvme-boot-part
         type: partition
         device: nvme-disk
         number: 2
-        size: 440GB
-      - id: nvme-root-fs
+        size: 2GB
+      - id: nvme-boot-fs
         type: format
-        volume: nvme-root-part
+        volume: nvme-boot-part
         fstype: ext4
-      - id: nvme-root-mount
+      - id: nvme-boot-mount
         type: mount
-        device: nvme-root-fs
-        path: /
-      # swap partition
-      - id: nvme-swap-part
+        device: nvme-boot-fs
+        path: /boot
+      # - LUKS partition -
+      - id: nvme-luks-part
         type: partition
         device: nvme-disk
         number: 3
-        size: 32GB
-      - id: nvme-swap-fs
+        size: -1
+      - id: nvme-luks-crypt
+        type: dm_crypt
+        dm_name: system-crypt
+        volume: nvme-luks-part
+        key: "<redacted>"
+        options: ['luks','tries=0']
+      # - System logical volumes -
+      - id: lvm-system-vg
+        type: lvm_volgroup
+        name: system
+        devices: ['nvme-luks-crypt']
+      # root volume
+      - id: lvm-system-root-vol
+        type: lvm_partition
+        name: root
+        volgroup: lvm-system-vg
+        size: 438GB
+      - id: lvm-system-root-fs
         type: format
-        volume: nvme-swap-part
-        fstype: swap
-      - id: nvme-swap-mount
+        volume: lvm-system-root-vol
+        fstype: ext4
+      - id: lvm-system-root-mount
         type: mount
-        device: nvme-swap-fs
+        device: lvm-system-root-fs
+        path: /
+      # swap volume
+      - id: lvm-system-swap-vol
+        type: lvm_partition
+        name: swap
+        volgroup: lvm-system-vg
+        size: 32GB
+      - id: lvm-system-swap-fs
+        type: format
+        volume: lvm-system-swap-vol
+        fstype: swap
+      - id: lvm-system-swap-mount
+        type: mount
+        device: lvm-system-swap-fs
         path: ''
   # - SSH -
   ssh:
@@ -192,7 +222,6 @@ autoinstall:
     # Enable fingerprint authentication
     - curtin in-target --target=/target -- pam-auth-update --enable fprintd
     # Manage kernel parameters
-    # (added parameters: preempt=full)
     - curtin in-target --target=/target -- sed -ie 's/^GRUB_CMDLINE_LINUX_DEFAULT="/&preempt=full /' /etc/default/grub
     - curtin in-target --target=/target -- update-grub
   # - Post-Installation (cloud-init) -

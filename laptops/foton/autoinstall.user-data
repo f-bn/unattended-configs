@@ -186,7 +186,7 @@ autoinstall:
     # Mount /tmp as a tmpfs
     - curtin in-target --target=/target -- systemctl enable /usr/lib/systemd/system/tmp.mount
     # Disable Bluetooth auto enable
-    - curtin in-target --target=/target -- sed -ie 's|^AutoEnable=.*|AutoEnable=false|' /etc/bluetooth/main.conf
+    - curtin in-target --target=/target -- sed -ie 's|^#AutoEnable=.*|AutoEnable=false|' /etc/bluetooth/main.conf
     # Enable fingerprint authentication
     - curtin in-target --target=/target -- pam-auth-update --enable fprintd
     # Manage kernel parameters

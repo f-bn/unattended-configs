@@ -19,8 +19,10 @@ packages:
   - docker-compose-v2
   - docker.io
   - fzf
+  - gawk
   - git
   - golang-chroma
+  - grc
   - htop
   - httpie
   - iputils-ping

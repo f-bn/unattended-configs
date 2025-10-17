@@ -48,9 +48,11 @@ autoinstall:
     - fonts-cascadia-code
     - fq
     - fzf
+    - gawk
     - git
     - gnome-tweaks
     - golang-chroma
+    - grc
     - htop
     - httpie
     - intel-gpu-tools

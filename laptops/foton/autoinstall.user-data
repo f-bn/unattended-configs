@@ -40,6 +40,7 @@ autoinstall:
     - bind9-dnsutils
     - bind9-utils
     - chrony
+    - crudini
     - curl
     - direnv
     - docker-buildx

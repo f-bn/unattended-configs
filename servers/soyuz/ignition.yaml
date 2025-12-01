@@ -391,3 +391,5 @@ systemd:
         WantedBy=multi-user.target
     - name: rpm-ostree-install@python3.service
       enabled: true
+    - name: rpm-ostree-install@python3-psycopg3.service
+      enabled: true

@@ -1,130 +1,123 @@
-### General informations
+<div align="center">
+  <img src="https://raw.githubusercontent.com/microsoft/vscode-icons/main/icons/light/gear.svg" alt="Config Logo" width="150"/>
 
-This repository contains unattended configurations for my personal devices running on Linux and Windows.
+  **Unattended configurations**
 
-In addition to these configurations, I use `chezmoi` for managing dotfiles: https://github.com/f-bn/dotfiles
+  ---
+</div>
 
-**Devices**
+## 📋 Overview
 
-| Device         | Type      | Operating system | Chassis                     | Configuration | Status    |
-| :--------------| :---------| :----------------| :---------------------------| :-------------| :---------|
-| **buran**      | Desktop   | Windows 11 24H2  | Custom                      | [unattended.xml](./desktops/buran/unattended.xml) | ✅ |
-| **buran**      | WSL       | Ubuntu 24.04     | Virtual machine (WSL2)      | [ubuntu.user-data](./wsl2/ubuntu.user-data)       | ✅ |
-| **foton**      | Laptop    | Ubuntu 25.10     | Thinkpad P14s Gen 5 (Intel) | [autoinstall.user-data](./laptops/foton/autoinstall.user-data)| ✅ |
-| **soyuz**      | Server    | Fedora CoreOS 42 | Beelink SER5 PRO            | [ignition.yaml](./servers/soyuz/ignition.yaml)    | ✅ |
+[![License](https://img.shields.io/github/license/f-bn/unattended-configs)](./LICENSE)
+[![GitHub](https://img.shields.io/badge/Repository-GitHub-181717?logo=github)](https://github.com/f-bn/unattended-configs)
 
-**Devices (legacy configurations)**
+This repository contains automated installation and provisioning configurations for my personal devices running Linux and Windows.
 
-| Device         | Type      | Operating system | Chassis                     | Configuration |
-| :--------------| :---------| :----------------| :---------------------------| :-------------|
-| **proton**     | Server    | Ubuntu 24.04 LTS | ASRock DeskMini X300        | [autoinstall.user-data](./servers/proton/autoinstall.user-data) |
+- 🔧 **Automated setup** - Fully unattended installations with minimal user interaction
+- 🖥️ **Multi-platform** - Supports Ubuntu (bare-metal and WSL2), Fedora CoreOS and Windows
+- 🔄 **Version-controlled** - Track and manage configuration changes over time
 
-### How-to
+Complemented with dotfile management via [`chezmoi`](https://github.com/f-bn/dotfiles).
 
-**Desktops/Laptop/Servers**
+## 📦 Available Configurations
 
-For the desktops, laptops and servers installations, Ventoy `autoinstall` feature is used to pass `autoinstall`/`user-data` (Ubuntu), `kickstart.ks` (Fedora) or `autounattend.xml` (Windows) configuration files to the respective installer.
+| Device | Type | OS | Hardware | Configuration |
+|--------|------|----|---------| --------------|
+| **[buran](./desktops/buran/)** | Desktop | Windows 11 24H2 | Custom build | [unattended.xml](./desktops/buran/unattended.xml) |
+| **[buran](./wsl2/)** | WSL | Ubuntu 24.04 | WSL2 | [ubuntu.user-data](./wsl2/ubuntu.user-data) |
+| **[foton](./laptops/foton/)** | Laptop | Ubuntu 25.10 | Thinkpad P14s Gen 5 | [autoinstall.user-data](./laptops/foton/autoinstall.user-data) |
+| **[soyuz](./servers/soyuz/)** | Server | Fedora CoreOS 43 | Beelink SER5 PRO | [ignition.yaml](./servers/soyuz/ignition.yaml) |
 
-In order to setup Ventoy `autoinstall`, we need to create a hierarchy in the **Ventoy** partition (where ISOs are stored on the USB key) by placing the unattended configurations in expected folders. Here the current hierarchy used for this repository:
+### Legacy Configurations
 
-```shell
+| Device | Type | OS | Hardware | Configuration |
+|--------|------|----|---------| --------------|
+| **[proton](./servers/proton/)** | Server | Ubuntu 24.04 LTS | ASRock DeskMini X300 | [autoinstall.user-data](./servers/proton/autoinstall.user-data) |
+
+## 🚀 Quick Start
+
+### Desktops, Laptops & Servers
+
+All physical installations leverage Ventoy's `autoinstall` plugin to automatically pass configuration files to the respective installers:
+
+- **Ubuntu (Desktop/Server)** - Cloud-Init `user-data` format
+- **Fedora CoreOS** - Ignition `ignition.yaml` format  
+- **Windows** - `autounattend.xml` format
+
+#### Ventoy setup
+
+Create the following structure in the Ventoy partition:
+
+```
 /autoinstall/
 ├── desktops/
-│   └── buran_unattended.xml
+│   └── buran/
+│       └── unattended.xml
 ├── laptops/
-│   └── foton.user-data
+│   └── foton/
+│       └── autoinstall.user-data
 ├── servers/
-│   └── proton.user-data
+│   └── proton/
+│       └── autoinstall.user-data
+├── wsl2/
+│   └── ubuntu.user-data
 /ventoy/
 └── ventoy.json
 ubuntu-24.04.2-live-server-amd64.iso
 ubuntu-25.04-desktop-amd64.iso
 win11_24h2.iso
+...
 ```
 
-The `ventoy.json` file defines which unattended file(s) is to be used with a given ISO file. You can have multiple configurations for an ISO file if needed.
-
-In the following configuration, I define that:
-  - **Ubuntu Server** ISOs are linked to my *proton* server unattended configuration
-  - **Ubuntu Desktop** ISOs (stable and beta) are linked to my *foton* laptop unattended configuration
-  - **Windows 11** ISOs are linked to my *buran* desktop unattended configuration
+Configure `ventoy.json` to map ISOs to configuration files:
 
 ```json
 {
     "auto_install":[
         {
             "image": "/ubuntu-**.**.*-live-server-amd64.iso",
-            "template": [
-                "/autoinstall/servers/proton.user-data"
-            ]
-        },
-        {
-            "image": "/ubuntu-**.**-live-server-amd64.iso",
-            "template": [
-                "/autoinstall/servers/proton.user-data"
-            ]
+            "template": ["/autoinstall/servers/proton/autoinstall.user-data"]
         },
         {
             "image": "/ubuntu-**.**-desktop-amd64.iso",
-            "template": [
-                "/autoinstall/laptops/foton.user-data"
-            ]
-        },
-        {
-            "image": "/ubuntu-**.**.*-desktop-amd64.iso",
-            "template": [
-                "/autoinstall/laptops/foton.user-data"
-            ]
+            "template": ["/autoinstall/laptops/foton/autoinstall.user-data"]
         },
         {
             "image": "/win11_****.iso",
-            "template": [
-                "/autoinstall/desktops/buran_unattended.xml"
-            ]
+            "template": ["/autoinstall/desktops/buran/unattended.xml"]
         }
     ]
 }
 ```
 
-Once done, simply boot the USB key on a device, then select the ISO in the Ventoy menu. You will have 2 options for each ISO:
-* Boot without an installation template
-* Boot with `/autoinstall/**/**` template depending on the selected ISO
+Boot the USB key, select an ISO, and choose the automated installation option.
 
-If the boot option with installation template is chosen, the installation will be launched in a fully automatted manner !
+### WSL2
 
-**WSL2**
+Uses Cloud-Init's [WSL datasource](https://docs.cloud-init.io/en/latest/reference/datasources/wsl.html) for provisioning.
 
-For WSL2, the new Cloud-Init [WSL datasource](https://docs.cloud-init.io/en/latest/reference/datasources/wsl.html) is used. This allows to bring your own custom distribution image and provision it in a standard and automated way. Regarding requirements, the image must at least include `systemd` and `cloud-init` packages.
+Place `default.user-data` at `%USERPROFILE%\.cloud-init\default.user-data`, then:
 
-The `default.user-data` file located in [wsl2](./wsl2/default.user-data) folder must be placed at `%USERPROFILE%\.cloud-init\default.user-data`.
+```powershell
+# Import Ubuntu image
+wsl --import Linux <install-folder> ubuntu.tar.gz
 
-As an example, we will import [an official Ubuntu 24.04 WSL image](https://cloud-images.ubuntu.com/wsl/releases/noble/current/) provided by Canonical: 
+# Wait for provisioning
+wsl -d Linux -- cloud-init status --wait
 
-```shell
-PS C:\WSL> wsl --import Linux <install folder> ubuntu.tar.gz
+# Restart
+wsl --shutdown
+wsl -d Linux
 ```
 
-Launch the WSL2 by waiting for `cloud-init` to provision your instance:
+## 📚 References
 
-```shell
-PS C:\WSL> wsl -d Linux -- cloud-init status --wait
-...................................................................................................
-status: done
-```
+- [Cloud-Init](https://cloud-init.io/)
+- [Ubuntu Autoinstall Reference](https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html)
+- [Ventoy](https://www.ventoy.net/en/index.html)
+- [Ventoy Autoinstall Plugin](https://www.ventoy.net/en/plugin_autoinstall.html)
+- [Unattend Generator (Windows)](https://schneegans.de/windows/unattend-generator/)
 
-As *cloud-init* will shutdown the WSL distribution at the end of provisionning, shutdown the WSL and start it again to avoid any issues:
+## License
 
-```shell
-PS C:\WSL> wsl --shutdown
-PS C:\WSL> wsl -d Linux
-```
-
-And voilà !
-
-### References
-
-- Cloud-Init: https://cloud-init.io/
-- Ubuntu autoinstall reference: https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html
-- Ventoy: https://www.ventoy.net/en/index.html
-- Ventoy Autoinstall plugin: https://www.ventoy.net/en/plugin_autoinstall.html
-- Unattend Generator (Windows): https://schneegans.de/windows/unattend-generator/
+See [LICENSE](./LICENSE) file for details.

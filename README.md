@@ -40,8 +40,8 @@ Complemented with dotfile management via [`chezmoi`](https://github.com/f-bn/dot
 
 All physical installations leverage Ventoy's `autoinstall` plugin to automatically pass configuration files to the respective installers:
 
-- **Ubuntu (Desktop/Server)** - Cloud-Init `user-data` format
-- **Fedora CoreOS** - Ignition `ignition.yaml` format  
+- **Ubuntu (Desktop/Server)** - Subiquity format (`user-data`, inspired by Cloud-Init)
+- **Fedora CoreOS** - Ignition format (`ignition.yaml`)
 - **Windows** - `autounattend.xml` format
 
 #### Ventoy setup

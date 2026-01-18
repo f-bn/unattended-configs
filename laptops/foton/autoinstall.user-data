@@ -96,6 +96,10 @@ autoinstall:
   updates: all
   # - Snap packages -
   snaps:
+    - name: bruno
+      channel: stable
+    - name: bw
+      channel: stable
     - name: chezmoi
       channel: stable
       classic: true
@@ -104,17 +108,11 @@ autoinstall:
       classic: true
     - name: discord
       channel: stable
-    - name: bruno
-      channel: stable
-    - name: bitwarden
-      channel: stable
-    - name: bw
-      channel: stable
-    - name: multipass
-      channel: stable
     - name: kubectl
       channel: stable
       classic: true
+    - name: multipass
+      channel: stable
   # - Storage -
   storage:
     swap:

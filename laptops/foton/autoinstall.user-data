@@ -307,8 +307,6 @@ autoinstall:
       commands:
         # Uninstall Firefox
         - [remove, --purge, firefox]
-        # Allow Bitwarden to use secure storage
-        - [connect, bitwarden:password-manager-service]
         # Enable Discord snap to observe system (to avoid errors messages)
         - [connect, discord:system-observe]
     # Reboot machine at end of Cloud-Init run

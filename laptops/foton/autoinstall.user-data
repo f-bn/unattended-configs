@@ -113,6 +113,9 @@ autoinstall:
       classic: true
     - name: multipass
       channel: stable
+    - name: task
+      channel: stable
+      classic: true
   # - Storage -
   storage:
     swap:
@@ -293,7 +296,9 @@ autoinstall:
             "live-restore": true,
             "userland-proxy": false,
             "features": {
-              "buildkit": true
+              "buildkit": true,
+              "cdi": true,
+              "containerd-snapshotter": true
             },
             "cgroup-parent": "docker.slice"
           }

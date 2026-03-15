@@ -312,6 +312,18 @@ autoinstall:
             },
             "cgroup-parent": "docker.slice"
           }
+      - path: /usr/local/bin/brave-launcher
+        owner: 'root:root'
+        permissions: '0755'
+        content: |
+          #!/bin/sh
+          set -e
+          XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+          BRAVE_USER_FLAGS_FILE="${XDG_CONFIG_HOME}/brave-flags.conf"
+          if [ -f "$BRAVE_USER_FLAGS_FILE" ]; then
+            USER_FLAGS="$(sed 's/#.*//' < $BRAVE_USER_FLAGS_FILE)"
+          fi
+          exec /usr/bin/brave-browser $@ ${USER_FLAGS}
     # Extra repositories
       - path: /etc/apt/sources.list.d/brave-browser.sources
         owner: 'root:root'

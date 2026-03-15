@@ -82,6 +82,7 @@ autoinstall:
     - systemd-container
     - transmission-gtk
     - tcpdump
+    - tio
     - tree
     - unzip
     - vainfo

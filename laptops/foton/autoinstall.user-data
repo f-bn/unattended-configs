@@ -411,6 +411,8 @@ autoinstall:
     runcmd:
       ### Enable PAM fingerprint authentication
       - pam-auth-update --enable fprintd
+      ### Disable Bluetooth auto-enable at startup
+      - sed -i -e 's|^#AutoEnable=.*|AutoEnable=false|' /etc/bluetooth/main.conf
       ### Post packages upgrade cleanup
       - apt autoremove --purge -y
       ### Update GRUB configuration

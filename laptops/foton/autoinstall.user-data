@@ -389,14 +389,15 @@ autoinstall:
         owner: 'root:root'
         permissions: '0755'
         content: |
-          #!/bin/sh
+          #!/bin/bash
           set -euo pipefail
           XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
           BRAVE_FLAGS_FILE="${XDG_CONFIG_HOME}/brave-flags.conf"
-          if [ -f "${BRAVE_FLAGS_FILE}" ]; then
-            USER_FLAGS="$(sed 's/#.*//' < ${BRAVE_FLAGS_FILE})"
+          USER_FLAGS=()
+          if [[ -f "${BRAVE_FLAGS_FILE}" ]]; then
+            mapfile -t USER_FLAGS < "${BRAVE_FLAGS_FILE}"
           fi
-          exec /usr/bin/brave-browser "$@" "${USER_FLAGS}"
+          exec /usr/bin/brave-browser "$@" "${USER_FLAGS[@]-}"
     # Packages upgrade
     package_update: true
     package_upgrade: true

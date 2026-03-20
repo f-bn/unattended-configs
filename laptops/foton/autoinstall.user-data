@@ -290,12 +290,15 @@ autoinstall:
         type: mount
         device: nvme-root-fs
         path: /
+  # - Kernel crash dump -
+  kernel-crash-dumps:
+    enabled: false
   # - Late commands -
   late-commands:
     # Switch to GNU coreutils
     - curtin in-target -- apt remove --allow-remove-essential -y coreutils-from-uutils
     # Remove unwanted packages
-    - curtin in-target -- apt remove -y gnome-characters netavark rsyslog sysprof ubuntu-fan unattended-upgrades
+    - curtin in-target -- apt remove -y --purge gnome-characters kdump-tools netavark rsyslog sysprof ubuntu-fan unattended-upgrades
     # Manage services
     - curtin in-target -- systemctl disable docker.service
     - curtin in-target -- systemctl enable docker.socket

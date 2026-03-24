@@ -25,7 +25,7 @@ Complemented with dotfiles management via [`chezmoi`](https://github.com/f-bn/do
 |--------|------|----|---------| --------------|
 | **[buran](./desktops/buran/)** | Desktop | Windows 11 24H2 | Custom build | [unattended.xml](./desktops/buran/unattended.xml) |
 | **[buran](./wsl2/)** | WSL | Ubuntu 24.04 | WSL2 | [ubuntu.user-data](./wsl2/ubuntu.user-data) |
-| **[foton](./laptops/foton/)** | Laptop | Ubuntu 25.10 | Thinkpad P14s Gen 5 | [autoinstall.user-data](./laptops/foton/autoinstall.user-data) |
+| **[foton](./laptops/foton/)** | Laptop | Ubuntu 25.10 | Thinkpad P14s Gen 5 | [autoinstall.user-data](./laptops/foton/25.10/autoinstall.user-data) |
 | **[soyuz](./servers/soyuz/)** | Server | Fedora CoreOS 43 | Beelink SER5 PRO | [ignition.yaml](./servers/soyuz/ignition.yaml) |
 
 ### Legacy Configurations

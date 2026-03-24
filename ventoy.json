@@ -15,15 +15,27 @@
             ]
         },
         {
-            "image": "/win11-****.iso",
+            "image": "/ubuntu-**.**-server.iso",
             "template": [
-                "/autoinstall/desktops/buran/unattended.xml"
+                "/autoinstall/servers/proton/autoinstall.user-data"
+            ]
+        },
+        {
+            "image": "/ubuntu-**.**.*-server.iso",
+            "template": [
+                "/autoinstall/servers/proton/autoinstall.user-data"
             ]
         },
         {
             "image": "/fedora-coreos-**-live.iso",
             "template": [
                 "/autoinstall/servers/soyuz/ignition.yaml"
+            ]
+        },
+        {
+            "image": "/win11-****.iso",
+            "template": [
+                "/autoinstall/desktops/buran/unattended.xml"
             ]
         }
     ]

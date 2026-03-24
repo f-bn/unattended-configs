@@ -55,17 +55,23 @@ Create the following structure in the Ventoy partition:
 │       └── unattended.xml
 ├── laptops/
 │   └── foton/
-│       └── autoinstall.user-data
+│       ├── 25.10/
+│       │   └── autoinstall.user-data
+│       └── 26.04/
+│           └── autoinstall.user-data
 ├── servers/
-│   └── proton/
-│       └── autoinstall.user-data
+│   ├── proton/
+│   │   └── autoinstall.user-data
+│   └── soyuz/
+│       └── ignition.yaml
 ├── wsl2/
 │   └── ubuntu.user-data
 /ventoy/
 └── ventoy.json
-ubuntu-24.04.2-live-server-amd64.iso
-ubuntu-25.04-desktop-amd64.iso
-win11_24h2.iso
+ubuntu-24.04.4-server.iso
+ubuntu-25.10-desktop.iso
+ubuntu-26.04-desktop.iso
+win11-24h2.iso
 ...
 ```
 
@@ -75,16 +81,23 @@ Configure `ventoy.json` to map ISOs to configuration files:
 {
     "auto_install":[
         {
-            "image": "/ubuntu-**.**.*-live-server-amd64.iso",
-            "template": ["/autoinstall/servers/proton/autoinstall.user-data"]
-        },
-        {
-            "image": "/ubuntu-**.**-desktop-amd64.iso",
-            "template": ["/autoinstall/laptops/foton/autoinstall.user-data"]
+            "image": "/ubuntu-**.**-desktop.iso",
+            "template": [
+                "/autoinstall/laptops/foton/25.10/autoinstall.user-data",
+                "/autoinstall/laptops/foton/26.04/autoinstall.user-data"
+            ]
         },
         {
             "image": "/win11_****.iso",
-            "template": ["/autoinstall/desktops/buran/unattended.xml"]
+            "template": [
+                "/autoinstall/desktops/buran/unattended.xml"
+            ]
+        },
+        {
+            "image": "/fedora-coreos-**-live.iso",
+            "template": [
+                "/autoinstall/servers/soyuz/ignition.yaml"
+            ]
         }
     ]
 }

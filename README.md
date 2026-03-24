@@ -75,7 +75,7 @@ win11-24h2.iso
 ...
 ```
 
-Configure `ventoy.json` to map ISOs to configuration files:
+Create a `ventoy.json` file to map ISOs to unattended configuration files:
 
 ```json
 {

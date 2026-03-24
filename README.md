@@ -17,7 +17,7 @@ This repository contains automated installation and provisioning configurations 
 - 🖥️ **Multi-platform** - Supports Ubuntu (bare-metal and WSL2), Fedora CoreOS and Windows
 - 🔄 **Version-controlled** - Track and manage configuration changes over time
 
-Complemented with dotfile management via [`chezmoi`](https://github.com/f-bn/dotfiles).
+Complemented with dotfiles management via [`chezmoi`](https://github.com/f-bn/dotfiles).
 
 ## 📦 Available Configurations
 

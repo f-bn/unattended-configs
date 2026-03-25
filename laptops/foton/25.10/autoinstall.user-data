@@ -50,7 +50,6 @@ autoinstall:
     - gawk
     - git
     - gnome-tweaks
-    - htop
     - httpie
     - intel-gpu-tools
     - intel-media-va-driver-non-free

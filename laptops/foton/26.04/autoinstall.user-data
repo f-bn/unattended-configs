@@ -69,6 +69,7 @@ autoinstall:
     - pipx
     - powertop
     - python3-pip
+    - ripgrep
     - rsync
     - rtl-sdr
     - s3cmd
@@ -91,6 +92,7 @@ autoinstall:
     - yamllint
     - yq
     - yt-dlp
+    - zoxide
     - zsh
     - zstd
   # - Snap packages -

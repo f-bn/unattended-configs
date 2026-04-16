@@ -10,7 +10,7 @@ autoinstall:
     search_drivers: true
   # - Kernel -
   kernel:
-    flavor: generic
+    flavor: hwe
   # - Drivers -
   drivers:
     install: true

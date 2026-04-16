@@ -63,7 +63,6 @@ autoinstall:
     - lm-sensors
     - mycli
     - netcat-openbsd
-    - neovim
     - nmap
     - nvme-cli
     - pgcli

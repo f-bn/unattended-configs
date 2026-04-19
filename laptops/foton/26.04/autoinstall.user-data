@@ -111,20 +111,11 @@ autoinstall:
       channel: stable
     - name: gradia
       channel: stable
-    - name: helm
-      channel: stable
-      classic: true
     - name: kubectl
       channel: stable
       classic: true
     - name: multipass
       channel: stable
-    - name: task
-      channel: stable
-      classic: true
-    - name: terraform
-      channel: stable
-      classic: true
   # - Storage -
   storage:
     swap:

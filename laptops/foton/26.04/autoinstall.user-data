@@ -97,6 +97,8 @@ autoinstall:
     - zstd
   # - Snap packages -
   snaps:
+    - name: bitwarden
+      channel: stable
     - name: bruno
       channel: stable
     - name: bw
@@ -321,6 +323,8 @@ autoinstall:
         - [remove, --purge, firefox]
         ### Allow Discord snap to observe system (to avoid errors messages)
         - [connect, discord:system-observe]
+        ### Allow Bitwarden snap to access password manager service
+        - [connect, bitwarden:password-manager-service]
     # Final commands
     runcmd:
       ### Enable PAM fingerprint authentication

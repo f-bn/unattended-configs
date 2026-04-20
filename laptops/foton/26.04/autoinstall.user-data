@@ -33,16 +33,183 @@ autoinstall:
       primary:
         - country-mirror
         - uri: http://archive.ubuntu.com/ubuntu
+    sources:
+      brave-browser.sources:
+        source: |
+          Types: deb
+          URIs: https://brave-browser-apt-release.s3.brave.com
+          Suites: stable
+          Components: main
+          Architectures: amd64
+          Signed-By: |
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
+            .
+            mQINBGOrCckBEADNcJUEATinOnryWPrc9nC3CrU6sDuJArVki6KMx3lkfSSATFfN
+            reVv+OcrLtGD1E+jwSlYVX0c+7LhuuMLeJuORD9JqXNSdbalnhEOijmzZ/Efgc3u
+            HWP3Vp2Ljdrp8YVGLDJwbUwSQv3xEfn5UioSA3FhuOigrpmLTPSTR1TrjT81jQC2
+            e6ychAkb0u225yjXuY/fJqx8KV6Qoh17dudt87VAuSatK0Fo93wECfFL9NRs4+fe
+            4Ddiw5HqOyC6wjqaEnfpDptCKj1M+tptR3BdJhnXPl/uxaNQ9ECpEVMGPJ4EX7pl
+            H7ReYmWFg2JsRDhtJ0A5jhQ32OUAyOAlHZIvy3X2B2MLSbAz1CSVLCnB4M6q88Xj
+            fkbIvb9dKy6zcv8Tjg6GXH/sYR0/N6HtX5qhqbEAzq3QSvGwwsQAWOgAfw9BDxPG
+            3xR8RBpwH5gOXsG8l2519uHlxn1uPkAoK67I/+iHGLS4m4lIQKkgq9zELhf8DxXf
+            AQJc0c9OU5eVU8tRIX5YU3bGC8cPv7DxFBJLKFNedl5MJTjQnchH0xuJ05Jvrmi7
+            CbL5wTX4OmecUU11iWubTVCQcbDgnmpv+hTVc7UNzRAmDGj3TDXxe7oVGkX6iKt5
+            JJqGPW0TO6Ge5gJ9BG4IQgFW5kiZvGQyUjRfLQOF/8l3+6+8rC7IloLhaQARAQAB
+            tElCcmF2ZSBMaW51eCBSZWxlYXNlIChCcmF2ZSBMaW51eCBSZWxlYXNlKSA8YnJh
+            dmUtbGludXgtcmVsZWFzZUBicmF2ZS5jb20+iQJ9BBMBCABnAhsDBQkSzAMABQsJ
+            CAcCAiICBhUKCQgLAgQWAgMBAh4HAheAFiEE2/GhFsIguMcWT5gjBoa3hCADglcF
+            AmdkXH0lFIAAAAAADwANbGFiZWxAYnJhdmUuY29tbGludXhfcmVsZWFzZQAKCRAG
+            hreEIAOCV7TcD/9AiF5eQtqjaoZ3Pwzof2UqyiK9cm683c8zncpCZb7sKFewHtBk
+            0i8Ufdc4jrqjHQF5G6DiSdxTqKuAtwzaxE+bl77NcA8cQO6PioIcREjUWSYKGZ4t
+            1fH9B5Ba45tQI9AgL7idPhRSQCqQmcrTgQKRiMcqD1sySd2zNfPZKJKElR9GDS2y
+            puzdYeeAXCtNm5PImvFDrbkk1Fv0qNJBLAgtSda9MJytAD+KaHQ3/1DpLQAVOTsD
+            KBvtowdx2m+H6+6ciYO8VwdT8GGMfWFRAs6Ix/uC7jO2W+k/53vu5TUm7OyxkXQB
+            sn8b+X70jlLtOAdSPpwb2ML9aoEE6AyqTojqiaM9u2FDNsZP9gYow9P3Owq3tQNB
+            YUnNRhk3A7lyWWnrkjU9icN73SYJNQcAHJg0GOXG7a2WG0fcgTDwBApjrBE75Fh9
+            ltM/7lgEL74y0Lnj614sV9Oet8oew7pXMcE2TdUwm6lKU0SQywamvQpHPngikYD9
+            QBoPcqsLOXJUF0jlcK4NlrzVeSqqVXGWtGhpU5jTmp3jlco+PlY3ck99ZnklLOoN
+            ZIDTyGxzzitu7vrE5drM0Tn2FFTDQ9wG6QuQ7oDk3qT8hSyDu8SF2O9VOrf1SPXo
+            cdmwtbPfL9dFQ4wQ/IrJIRh7xViYodDvGL8V7ROrWTR5NF1ZavfmM5fGnA==
+            =9XDs
+            -----END PGP PUBLIC KEY BLOCK-----
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
+            .
+            mQINBGfYXXMBEADoa5Tv7DFt6G4OhrRZCMnE8nGSDez1VW71Qh5OEmSdVHALImmB
+            3hA3HZg+MOTzy6lBD23+JcCg4ppAkYgeN08AmSJQfsrS9Vrmojifs9TpjQ207ioH
+            EqQH2/5uU0/8xFz/o8TfFMz7JwjviUmItcXz1MybAgLuRAPmjzlZYNVjJ8XaT2FB
+            zrxidV9Yr/zUfzFSfX43ERhXx6hUrBCsl/mAUQ8bcOCLPX6pX3A/2ZtdUIxTlYBg
+            c44/WmGYihI7g0jSvFhLlA5Eo1NIQBydO6pYs6NnRe5YRmZCF29jPC//8bgEQCsn
+            yfDy/uZCofkTyID9MRSxUncIeLA12yUuxGvgoD6lM4ezdBbQRp91YngzGUQFnEXM
+            KZHeOAkWIyOrHkzlyB9UtEnI7tAJM7PtXnSWtXT9e3jxULkBOPtm1LFCZKjlG9UJ
+            WTg1WkpSTo+JlVzZd1Hko3N6AVj3ivCsoL76YL/g0UeWNNNF2HeFqlaBvnxmAuxJ
+            Hkp7DSydDPvst3/FqO128V5isrOW+z8pI97SpFJAmvoPHYAwM3C6qJdvDS1rRkTF
+            iIEhKm0X2KetnOLvdbf3jC9gg2Z57V13r7aLWGZJhz4ZPuuQX9/ekYqZxYp0qyb7
+            ijr2KzSXywJWK0ilRm4OgEJx+HHqO95XFJDPgIcD+voxjcYxCbwW4FkcNwARAQAB
+            tENCcmF2ZSBMaW51eCBSZWxlYXNlIChCcmF2ZSBMaW51eCBSZWxlYXNlKSA8bGlu
+            dXgtcmVsZWFzZUBicmF2ZS5jb20+iQKBBBMBCABrAhsDBQkSzAMABQsJCAcCAiIC
+            BhUKCQgLAgQWAgMBAh4HAheAFiEER9MqdOmp4BOktJJsaNUT02pzzZYFAmfYXXYp
+            FIAAAAAADwARbGFiZWxAYnJhdmUuY29tbGludXhfcmVsZWFzZV9tcmsACgkQaNUT
+            02pzzZYXzhAAjXohBzvsNtVA9olF5tRbQkTi90bbet21LS+gw4OWGsFfNgs1Ze1L
+            1h81XPFrYDXL6gpMZmfSAK2PbdgcAJvJovxWR/FXvZQhj3je2zrd7JfGwII/1g8m
+            O5WFgscGP+ZaeddCMSO3zeOodm9EIHpR98Bpaayzl6drwwMrE5rvDma+TfoqvQUd
+            2LkoSqr0tT/LaRw10m/7geDrMwmWV8tgMlaHEPBZh6P+TNtC5kAm73uqVDzIdKC6
+            X4SL6h8mQB8HY4ZsGX5ligiobgb2unMRfqYPeULwL2LmA7+5+k7GZpdDz/6cucUe
+            sHBU9Ug/7oEiVqE5xnGrA+FH4lBty0TPsVLT9+Ukbv7ogWXkB4eUpH45hvZnR8Dm
+            w4+FZcu2pC0U/CQYyxpmb6Xd6D3CXfTENyx2ramUDuZzl/bcoSScdm3Mps3QAjGf
+            OifBzSzm2eYi8QtxTSMPeaH33UjzyEUvjVmsyGKVA7bvA9XwbS6GwIpGQI8Ls02A
+            ws9D01MB6QxXMuhplOh3ugGlHnnvH2RS63JsD8ZbGWbx8bh1fQCgG+nBNcik4tac
+            ZpAkRwzZ2G1TR433klJ0s3q/6hGDqhmt/6vWxXAOfrEeBvbzFmjwJvlfq2fftag4
+            euPiI1qQbVRqYuIgfDy52WwmIA32XULwHM7deyNKrp8RvX1eHyylocs=
+            =Mbfv
+            -----END PGP PUBLIC KEY BLOCK-----
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
+            .
+            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
+            =0GhZ
+            -----END PGP PUBLIC KEY BLOCK-----
+      docker-ce.sources:
+        source: |
+          Types: deb
+          URIs: https://download.docker.com/linux/ubuntu
+          Suites: resolute
+          Components: stable
+          Architectures: amd64
+          Signed-By: |
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
+            .
+            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
+            YT90qFF93M3v01BbxP+EIY2/9tiIPbrd
+            =0YYh
+            -----END PGP PUBLIC KEY BLOCK-----
   # - Packages -
   packages:
     - amberol
     - apache2-utils
     - bind9-dnsutils
+    - brave-browser
     - curl
-    - docker-buildx
-    - docker-compose-v2
-    - docker.io
-    - distrobox
+    - docker-ce
     - fastfetch
     - fd-find
     - fonts-cascadia-code
@@ -82,6 +249,7 @@ autoinstall:
     - tcpdump
     - tio
     - tree
+    - uidmap
     - unzip
     - vainfo
     - vim
@@ -184,16 +352,31 @@ autoinstall:
   # - Kernel crash dump -
   kernel-crash-dumps:
     enabled: false
+  # - Early commands -
+  early-commands:
+    # Beautiful hack to tamper unattended-upgrades that ends up hanging at the end of the
+    # upgrade step for whatever reason, preventing the installation from finishing.
+    - >-
+      systemd-run sh -c 'while true; do
+      if [ -f /target/usr/bin/unattended-upgrade ]; then
+        if ! grep -qF "exit 0" /target/usr/bin/unattended-upgrade; then
+          printf "#!/bin/sh\nexit 0\n" > /target/usr/bin/unattended-upgrade
+        fi
+      fi; sleep 1; done'
   # - Late commands -
   late-commands:
     # Switch to GNU coreutils
-    - curtin in-target -- apt install -y --allow-remove-essential coreutils-from-gnu coreutils-from-uutils- 
+    - curtin in-target -- apt remove -y --allow-remove-essential coreutils-from-uutils
     # Remove unwanted packages
-    - curtin in-target -- apt remove -y --purge aardvark-dns gnome-characters kdump-tools netavark rsyslog sysprof ubuntu-fan unattended-upgrades
+    - curtin in-target -- apt remove -y --purge gnome-characters kdump-tools rsyslog sysprof unattended-upgrades
     - curtin in-target -- apt autoremove -y --purge
-    # Manage services
+    # Enable Docker daemon socket activation
     - curtin in-target -- systemctl disable docker.service
     - curtin in-target -- systemctl enable docker.socket
+    # Enable PAM fingerprint authentication
+    - curtin in-target -- pam-auth-update --enable fprintd                                         
+    # Disable Bluetooth auto-enable at startup
+    - curtin in-target -- sed -i -e 's|^#AutoEnable=.*|AutoEnable=false|' /etc/bluetooth/main.conf
   # - Post-Installation -
   user-data:
     # Hostname
@@ -268,23 +451,6 @@ autoinstall:
           # Generated by cloud-init
           #
           Apt::Cmd::Disable-Script-Warning true;
-      - path: /etc/apt/sources.list.d/brave-browser.sources
-        owner: 'root:root'
-        permissions: '0644'
-        content: |
-          # Generated by cloud-init
-          #
-          Types: deb
-          URIs: https://brave-browser-apt-release.s3.brave.com
-          Suites: stable
-          Components: main
-          Architectures: amd64
-          Signed-By: /etc/apt/keyrings/brave-browser.gpg
-      - path: /etc/apt/keyrings/brave-browser.gpg
-        owner: 'root:root'
-        permissions: '0644'
-        source:
-          uri: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
       - path: /etc/docker/daemon.json
         owner: 'root:root'
         permissions: '0644'
@@ -313,11 +479,9 @@ autoinstall:
             mapfile -t USER_FLAGS < "${BRAVE_FLAGS_FILE}"
           fi
           exec /usr/bin/brave-browser "$@" "${USER_FLAGS[@]-}"
-    # Extra packages and final updates
+    # Updates
     package_update: true
     package_upgrade: true
-    packages:
-      - brave-browser
     # Snap
     snap:
       commands:
@@ -329,11 +493,7 @@ autoinstall:
         - [connect, bitwarden:password-manager-service]
     # Final commands
     runcmd:
-      ### Enable PAM fingerprint authentication
-      - pam-auth-update --enable fprintd                                         
-      ### Disable Bluetooth auto-enable at startup
-      - sed -i -e 's|^#AutoEnable=.*|AutoEnable=false|' /etc/bluetooth/main.conf
-      ### Post packages upgrade cleanup
+      ### Post packages update cleanup
       - apt autoremove --purge -y
       ### Update GRUB configuration
       - update-grub

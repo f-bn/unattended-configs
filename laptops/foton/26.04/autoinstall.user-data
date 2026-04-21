@@ -207,9 +207,11 @@ autoinstall:
     - amberol
     - apache2-utils
     - bind9-dnsutils
+    - bind9-host
     - brave-browser
     - curl
     - docker-ce
+    - docker-clean
     - fastfetch
     - fd-find
     - fonts-cascadia-code
@@ -245,6 +247,7 @@ autoinstall:
     - socat
     - strace
     - systemd-container
+    - systemd-cron
     - transmission-gtk
     - tcpdump
     - tio
@@ -255,7 +258,6 @@ autoinstall:
     - vim
     - vlc
     - wget
-    - whois
     - wireguard-tools
     - yamllint
     - yq
@@ -355,7 +357,7 @@ autoinstall:
   # - Early commands -
   early-commands:
     # Beautiful hack to tamper unattended-upgrades that ends up hanging at the end of the
-    # upgrade step for whatever reason, preventing the installation from finishing.
+    # upgrade step (for whatever reason), preventing the installation from finishing.
     - >-
       systemd-run sh -c 'while true; do
       if [ -f /target/usr/bin/unattended-upgrade ]; then
@@ -368,7 +370,7 @@ autoinstall:
     # Switch to GNU coreutils
     - curtin in-target -- apt remove -y --allow-remove-essential coreutils-from-uutils
     # Remove unwanted packages
-    - curtin in-target -- apt remove -y --purge gnome-characters kdump-tools rsyslog sysprof unattended-upgrades
+    - curtin in-target -- apt remove -y --purge gnome-characters kdump-tools rsyslog sysprof sysstat unattended-upgrades
     - curtin in-target -- apt autoremove -y --purge
     # Enable Docker daemon socket activation
     - curtin in-target -- systemctl disable docker.service

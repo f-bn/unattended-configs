@@ -24,7 +24,6 @@ Complemented with dotfiles management via [`chezmoi`](https://github.com/f-bn/do
 | Device | Type | OS | Hardware | Configuration |
 |--------|------|----|---------| --------------|
 | **[buran](./desktops/buran/)** | Desktop | Windows 11 24H2 | Custom build | [unattended.xml](./desktops/buran/unattended.xml) |
-| **[buran](./wsl2/)** | WSL | Ubuntu 24.04 | WSL2 | [ubuntu.user-data](./wsl2/ubuntu.user-data) |
 | **[foton](./laptops/foton/)** | Laptop | Ubuntu 26.04 | Thinkpad P14s Gen 5 | [autoinstall.user-data](./laptops/foton/26.04/autoinstall.user-data) |
 | **[soyuz](./servers/soyuz/)** | Server | Fedora CoreOS 43 | Beelink SER5 PRO | [ignition.yaml](./servers/soyuz/ignition.yaml) |
 
@@ -64,8 +63,6 @@ Create the following structure in the Ventoy partition:
 │   │   └── autoinstall.user-data
 │   └── soyuz/
 │       └── ignition.yaml
-├── wsl2/
-│   └── ubuntu.user-data
 /ventoy/
 └── ventoy.json
 ubuntu-24.04.4-server.iso

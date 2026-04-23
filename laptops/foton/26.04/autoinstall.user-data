@@ -246,6 +246,9 @@ autoinstall:
     - pipx
     - powertop
     - python3-pip
+    - qemu-system-x86-hwe
+    - qemu-utils-hwe
+    - cloud-image-utils
     - ripgrep
     - rsync
     - rtl-sdr
@@ -266,6 +269,7 @@ autoinstall:
     - vlc
     - wget
     - wireguard-tools
+    - xorriso
     - yamllint
     - yq
     - yt-dlp

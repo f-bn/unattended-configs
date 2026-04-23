@@ -1,0 +1,17 @@
+[tasks."tests:foton"]
+description = "Run unattended installation test for 'foton' device"
+run = [
+  "tests/ubuntu/launch.sh --device foton --iso tests/ubuntu/ubuntu-26.04.iso --userdata laptops/foton/26.04/autoinstall.user-data",
+  "rm -rf .cache/foton"
+]
+
+[tasks."tests:buran"]
+description = "Run unattended installation test for 'buran' device"
+run = [
+  "tests/ubuntu/launch.sh --device buran --iso tests/ubuntu/ubuntu-26.04.iso --userdata desktops/buran/26.04/autoinstall.user-data",
+  "rm -rf .cache/buran"
+]
+
+[tasks.cleanup]
+description = "Clean up all cached files"
+run = "rm -rf .cache"

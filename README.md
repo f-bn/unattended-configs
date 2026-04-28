@@ -23,7 +23,6 @@ Complemented with dotfiles management via [`chezmoi`](https://github.com/f-bn/do
 
 | Device | Type | OS | Hardware | Configuration |
 |--------|------|----|---------| --------------|
-| **[buran](./desktops/buran/)** | Desktop | Windows 11 24H2 | Custom build | [unattended.xml](./desktops/buran/unattended.xml) |
 | **[foton](./laptops/foton/)** | Laptop | Ubuntu 26.04 | Thinkpad P14s Gen 5 | [autoinstall.user-data](./laptops/foton/26.04/autoinstall.user-data) |
 | **[soyuz](./servers/soyuz/)** | Server | Fedora CoreOS 43 | Beelink SER5 PRO | [ignition.yaml](./servers/soyuz/ignition.yaml) |
 
@@ -31,6 +30,7 @@ Complemented with dotfiles management via [`chezmoi`](https://github.com/f-bn/do
 
 | Device | Type | OS | Hardware | Configuration |
 |--------|------|----|---------| --------------|
+| **[buran](./desktops/buran/)** | Desktop | Windows 11 24H2 | Custom build | [unattended.xml](./desktops/buran/win11/unattended.xml) |
 | **[proton](./servers/proton/)** | Server | Ubuntu 24.04 LTS | ASRock DeskMini X300 | [autoinstall.user-data](./servers/proton/autoinstall.user-data) |
 
 ## 🚀 Quick Start
@@ -51,7 +51,10 @@ Create the following structure in the Ventoy partition:
 /autoinstall/
 ├── desktops/
 │   └── buran/
-│       └── unattended.xml
+│       ├── 26.04/
+│       │   └── autoinstall.user-data
+│       └── win11/
+│           └── unattended.xml
 ├── laptops/
 │   └── foton/
 │       ├── 25.10/

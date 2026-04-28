@@ -27,15 +27,9 @@
             ]
         },
         {
-            "image": "/fedora-coreos-**-live.iso",
-            "template": [
-                "/autoinstall/servers/soyuz/ignition.yaml"
-            ]
-        },
-        {
             "image": "/win11-****.iso",
             "template": [
-                "/autoinstall/desktops/buran/unattended.xml"
+                "/autoinstall/desktops/buran/win11/unattended.xml"
             ]
         }
     ]

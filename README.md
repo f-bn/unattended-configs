@@ -62,10 +62,8 @@ Create the following structure in the Ventoy partition:
 │       └── 26.04/
 │           └── autoinstall.user-data
 ├── servers/
-│   ├── proton/
-│   │   └── autoinstall.user-data
-│   └── soyuz/
-│       └── ignition.yaml
+│   └── proton/
+│       └── autoinstall.user-data
 /ventoy/
 └── ventoy.json
 ubuntu-24.04.4-server.iso
@@ -92,36 +90,12 @@ Create a `ventoy.json` file to map ISOs to unattended configuration files:
             "template": [
                 "/autoinstall/desktops/buran/unattended.xml"
             ]
-        },
-        {
-            "image": "/fedora-coreos-**-live.iso",
-            "template": [
-                "/autoinstall/servers/soyuz/ignition.yaml"
-            ]
         }
     ]
 }
 ```
 
 Boot the USB key, select an ISO, and choose the automated installation option.
-
-### WSL2
-
-Uses Cloud-Init's [WSL datasource](https://docs.cloud-init.io/en/latest/reference/datasources/wsl.html) for provisioning.
-
-Place `default.user-data` at `%USERPROFILE%\.cloud-init\default.user-data`, then:
-
-```powershell
-# Import Ubuntu image
-wsl --import Linux <install-folder> ubuntu.tar.gz
-
-# Wait for provisioning
-wsl -d Linux -- cloud-init status --wait
-
-# Restart
-wsl --shutdown
-wsl -d Linux
-```
 
 ## 📚 References
 
